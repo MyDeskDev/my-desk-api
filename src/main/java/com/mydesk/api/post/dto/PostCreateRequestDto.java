@@ -19,7 +19,7 @@ public class PostCreateRequestDto {
     public PostCreateRequestDto(String title, String picture, List<PostItem> postItems) {
         this.title = title;
         this.picture = picture;
-//        this.postItems.addAll(postItems);
+        this.postItems = postItems;
     }
 
     public Post getPost() {
@@ -27,6 +27,10 @@ public class PostCreateRequestDto {
                 .title(title)
                 .picture(picture)
                 .build();
+
+        if (postItems != null) {
+            post.addAllPostItem(postItems);
+        }
 
         return post;
     }

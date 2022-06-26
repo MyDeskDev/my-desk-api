@@ -1,5 +1,6 @@
 package com.mydesk.api.post.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.mydesk.api.config.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,6 +26,7 @@ public class PostItem extends BaseTimeEntity {
     @Column(nullable = false)
     private Boolean isFavorite = false;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "POST_ID")
     private Post post;

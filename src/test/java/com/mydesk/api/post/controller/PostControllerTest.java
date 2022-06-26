@@ -3,6 +3,7 @@ package com.mydesk.api.post.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mydesk.api.config.auth.dto.SessionUser;
 import com.mydesk.api.post.domain.Post;
+import com.mydesk.api.post.domain.PostItem;
 import com.mydesk.api.post.domain.PostRepository;
 import com.mydesk.api.post.domain.PostStatus;
 import com.mydesk.api.post.dto.PostCreateRequestByAdminDto;
@@ -26,10 +27,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import static com.mydesk.api.Fixtures.aPost;
-import static com.mydesk.api.Fixtures.aUser;
+import static com.mydesk.api.Fixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -88,12 +89,18 @@ public class PostControllerTest {
         // given
         String title = "title";
         String picture = "picture";
+        PostItem postItem1 = aPostItem().build();
+        PostItem postItem2 = aPostItem2().build();
+        List<PostItem> postItems = new ArrayList<>();
+        postItems.add(postItem1);
+        postItems.add(postItem2);
         PostCreateRequestDto requestDto = PostCreateRequestDto.builder()
                 .title(title)
                 .picture(picture)
+                .postItems(postItems)
                 .build();
 
-        String url = "http://localhost:" + port + "/api/v1/posts";
+        String url = "http://localhost:" + port + "/api/v1/post";
 
         // when
         setSessionUser();
@@ -106,7 +113,6 @@ public class PostControllerTest {
         List<Post> all = postRepository.findAll();
         assertThat(all.get(0).getUser()).isNotNull();
         assertThat(all.get(0).getStatus()).isEqualTo(PostStatus.CONFIRMING);
-        System.out.println(all.get(0).getUser());
     }
 
     @Test
@@ -116,13 +122,19 @@ public class PostControllerTest {
         User user = userRepository.save(aUser().role(Role.USER).build());
         String title = "title";
         String picture = "picture";
+        PostItem postItem1 = aPostItem().build();
+        PostItem postItem2 = aPostItem2().build();
+        List<PostItem> postItems = new ArrayList<>();
+        postItems.add(postItem1);
+        postItems.add(postItem2);
         PostCreateRequestByAdminDto requestDto = PostCreateRequestByAdminDto.builder()
                 .userId(user.getId())
                 .title(title)
                 .picture(picture)
+                .postItems(postItems)
                 .build();
 
-        String url = "http://localhost:" + port + "/api/v1/manage/posts";
+        String url = "http://localhost:" + port + "/api/v1/manage/post";
 
         // when
         setAdminUser();
@@ -150,7 +162,7 @@ public class PostControllerTest {
                 .picture(picture)
                 .build();
 
-        String url = "http://localhost:" + port + "/api/v1/manage/posts";
+        String url = "http://localhost:" + port + "/api/v1/manage/post";
 
         // when
         setSessionUser();

@@ -5,12 +5,15 @@ import com.mydesk.api.post.domain.Post;
 import com.mydesk.api.post.domain.PostRepository;
 import com.mydesk.api.post.dto.PostCreateRequestByAdminDto;
 import com.mydesk.api.post.dto.PostCreateRequestDto;
+import com.mydesk.api.post.dto.PostListResponseDto;
 import com.mydesk.api.user.domain.User;
 import com.mydesk.api.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -39,5 +42,12 @@ public class PostService {
         postRepository.save(post);
 
         return post.getId();
+    }
+
+    @Transactional(readOnly = true)
+    public List<PostListResponseDto> findAll() {
+        return postRepository.findAll().stream()
+                .map(PostListResponseDto::new)
+                .collect(Collectors.toList());
     }
 }
