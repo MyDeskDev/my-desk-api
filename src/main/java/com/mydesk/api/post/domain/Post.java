@@ -5,6 +5,7 @@ import com.mydesk.api.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,14 +15,15 @@ import java.util.stream.Collectors;
 @Getter
 @NoArgsConstructor
 @Entity
+@ToString(of = {"id", "title", "picture", "status", "postOrder"})
 public class Post extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "USER_ID", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID")
     private User user;
 
     @Column(nullable = false)
@@ -29,7 +31,7 @@ public class Post extends BaseTimeEntity {
 
     @Column(nullable = false)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
-    private List<PostItem> postItems;
+    private List<PostItem> postItems = new ArrayList<>();
 
     @Column
     private String picture;
@@ -39,29 +41,27 @@ public class Post extends BaseTimeEntity {
     private PostStatus status;
 
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long ordering;
+    private Long postOrder;
 
     public void setUser(User user) {
         this.user = user;
     }
 
     @Builder
-    public Post(User user, String title, Long ordering, String picture){
+    public Post(User user, String title, String picture, Long postOrder){
         this.user = user;
         this.title = title;
         this.picture = picture;
         this.status = PostStatus.CONFIRMING;
-        this.ordering = ordering;
-        this.postItems = new ArrayList<>();
+        this.postOrder = postOrder;
     }
 
     @Builder
-    public Post(String title, Long ordering, String picture){
+    public Post(String title, String picture,  Long postOrder){
         this.title = title;
         this.picture = picture;
         this.status = PostStatus.CONFIRMING;
-        this.ordering = ordering;
-        this.postItems = new ArrayList<>();
+        this.postOrder = postOrder;
     }
 
     public void accept() {

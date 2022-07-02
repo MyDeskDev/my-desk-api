@@ -5,12 +5,14 @@ import com.mydesk.api.config.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor
 @Entity
+@ToString(of = {"id", "name", "content", "isFavorite"})
 public class PostItem extends BaseTimeEntity {
 
     @Id
@@ -27,8 +29,8 @@ public class PostItem extends BaseTimeEntity {
     private Boolean isFavorite = false;
 
     @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "POST_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
     private Post post;
 
     public void setPost(Post post) {

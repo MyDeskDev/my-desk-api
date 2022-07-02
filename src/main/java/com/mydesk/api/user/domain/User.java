@@ -5,6 +5,7 @@ import com.mydesk.api.post.domain.Post;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Entity
+@ToString(of = {"id", "name", "email", "picture", "role", "snsChannel"})
 public class User extends BaseTimeEntity {
 
     @Id
@@ -36,8 +38,8 @@ public class User extends BaseTimeEntity {
     @Column
     private SnsChannel snsChannel;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Post> posts = new ArrayList<>();
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//    private List<Post> posts = new ArrayList<>();
 
     @Builder
     public User(String name, String email, String picture, Role role, SnsChannel snsChannel) {
@@ -59,8 +61,8 @@ public class User extends BaseTimeEntity {
         return this.role.getKey();
     }
 
-    public void addPost(Post post) {
-        this.getPosts().add(post);
-        post.setUser(this);
-    }
+//    public void addPost(Post post) {
+//        this.getPosts().add(post);
+//        post.setUser(this);
+//    }
 }

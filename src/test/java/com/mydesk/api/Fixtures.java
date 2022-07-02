@@ -38,6 +38,6 @@ public class Fixtures {
         return Post.builder()
                 .title("test")
                 .picture("pic")
-                .ordering(1L);
+                .postOrder(1L);
     }
 }

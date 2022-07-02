@@ -12,10 +12,4 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final UserRepository userRepository;
-
-    @GetMapping("/test")
-    public Long test(@LoginUser SessionUser user) {
-        System.out.println(user.getId());
-        return user.getId();
-    }
 }
