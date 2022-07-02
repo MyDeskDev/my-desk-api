@@ -2,7 +2,6 @@ package com.mydesk.api.post.controller;
 
 import com.mydesk.api.config.auth.LoginUser;
 import com.mydesk.api.config.auth.dto.SessionUser;
-import com.mydesk.api.post.domain.Post;
 import com.mydesk.api.post.dto.PostCreateRequestByAdminDto;
 import com.mydesk.api.post.dto.PostCreateRequestDto;
 import com.mydesk.api.post.dto.PostListResponseDto;
@@ -22,8 +21,9 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping("/api/v1/post")
-    public List<PostListResponseDto> findAll() {
-        return postService.findAll();
+    public List<PostListResponseDto> getPostList() {
+//        TODO: paging, searching
+        return postService.getPostList();
     }
 
     @PostMapping("/api/v1/post")

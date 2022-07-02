@@ -18,9 +18,7 @@ import javax.transaction.Transactional;
 import static com.mydesk.api.Fixtures.aPostItem;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -36,8 +34,7 @@ public class PostTest {
 
     @BeforeEach
     public void setup() {
-        User user = userRepository.save(aUser().build());
-        this.user = user;
+        this.user = userRepository.save(aUser().build());
     }
 
     @AfterEach
@@ -50,7 +47,7 @@ public class PostTest {
     public void postItemRelationTest() {
         // given
         Post post = aPost().build();
-        user.addPost(post);
+        post.setUser(user);
 
         // when
         PostItem postItem = aPostItem().build();
@@ -67,15 +64,16 @@ public class PostTest {
     @Transactional
     public void defaultStatusTest() {
         // given
-        Post expectedPost = postRepository.save(aPost().user(aUser().build()).build());
+        Post post = aPost().build();
+        post.setUser(this.user);
+        postRepository.save(post);
 
         // when
         List<Post> posts = postRepository.findAll();
         Post resultPost = posts.get(0);
 
         // then
-        assertThat(expectedPost.getId()).isEqualTo(resultPost.getId());
-        assertThat(expectedPost.getStatus()).isEqualTo(PostStatus.CONFIRMING);
+        assertThat(resultPost.getStatus()).isEqualTo(PostStatus.CONFIRMING);
     }
 
     @Test

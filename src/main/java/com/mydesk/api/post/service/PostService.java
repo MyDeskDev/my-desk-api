@@ -2,6 +2,7 @@ package com.mydesk.api.post.service;
 
 import com.mydesk.api.config.auth.dto.SessionUser;
 import com.mydesk.api.post.domain.Post;
+import com.mydesk.api.post.domain.PostQueryRepository;
 import com.mydesk.api.post.domain.PostRepository;
 import com.mydesk.api.post.dto.PostCreateRequestByAdminDto;
 import com.mydesk.api.post.dto.PostCreateRequestDto;
@@ -21,6 +22,7 @@ public class PostService {
 
     private final UserRepository userRepository;
     private final PostRepository postRepository;
+    private final PostQueryRepository postQueryRepository;
 
     @Transactional
     public Long create(SessionUser userDto, PostCreateRequestDto requestDto) {
@@ -45,9 +47,7 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public List<PostListResponseDto> findAll() {
-        return postRepository.findAll().stream()
-                .map(PostListResponseDto::new)
-                .collect(Collectors.toList());
+    public List<PostListResponseDto> getPostList() {
+        return postQueryRepository.getPostList();
     }
 }
