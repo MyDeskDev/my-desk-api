@@ -1,12 +1,8 @@
 package com.mydesk.api.post.service;
 
 import com.mydesk.api.config.auth.dto.SessionUser;
-import com.mydesk.api.post.domain.Post;
-import com.mydesk.api.post.domain.PostQueryRepository;
-import com.mydesk.api.post.domain.PostRepository;
-import com.mydesk.api.post.dto.PostCreateRequestByAdminDto;
-import com.mydesk.api.post.dto.PostCreateRequestDto;
-import com.mydesk.api.post.dto.PostListResponseDto;
+import com.mydesk.api.post.domain.*;
+import com.mydesk.api.post.dto.*;
 import com.mydesk.api.user.domain.User;
 import com.mydesk.api.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -49,5 +45,28 @@ public class PostService {
     @Transactional(readOnly = true)
     public List<PostListResponseDto> getPostList() {
         return postQueryRepository.getPostList();
+    }
+
+    @Transactional
+    public Long update(SessionUser userDto, Long id, PostUpdateRequestDto requestDto) throws Exception {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다"));
+
+        // TODO: exception 전역 처리
+        if (post.getUser().getId().equals(userDto.getId())) {
+            throw new IllegalAccessException("해당 게시물을 수정할 수 없습니다.");
+        }
+
+//        List<PostItem> postItems = postItemRepository.findByPostId(id);
+//        postItems.forEach(System.out::println);
+        return 1L;
+    }
+
+    @Transactional(readOnly = true)
+    public PostResponseDto getPost(Long id) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다"));
+
+        return new PostResponseDto(post);
     }
 }

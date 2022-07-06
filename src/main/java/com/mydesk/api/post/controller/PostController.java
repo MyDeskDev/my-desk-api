@@ -2,15 +2,12 @@ package com.mydesk.api.post.controller;
 
 import com.mydesk.api.config.auth.LoginUser;
 import com.mydesk.api.config.auth.dto.SessionUser;
-import com.mydesk.api.post.dto.PostCreateRequestByAdminDto;
-import com.mydesk.api.post.dto.PostCreateRequestDto;
-import com.mydesk.api.post.dto.PostListResponseDto;
+import com.mydesk.api.post.dto.*;
 import com.mydesk.api.post.service.PostService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,12 +24,27 @@ public class PostController {
     }
 
     @PostMapping("/api/v1/post")
-    public Long createPost(@LoginUser SessionUser userDto, @RequestBody PostCreateRequestDto requestDto) {
+    public Long create(@LoginUser SessionUser userDto, @RequestBody PostCreateRequestDto requestDto) {
         return postService.create(userDto, requestDto);
     }
 
+    @GetMapping("/api/v1/post/{id}")
+    public PostResponseDto getPost(@PathVariable Long id) {
+        return postService.getPost(id);
+    }
+
+    @PutMapping("/api/v1/post/{id}")
+    public Long update(@LoginUser SessionUser userDto, @PathVariable Long id, @RequestBody PostUpdateRequestDto requestDto) throws Exception {
+        return postService.update(userDto, id, requestDto);
+    }
+
     @PostMapping("/api/v1/manage/post")
-    public Long createPostByAdmin(@RequestBody PostCreateRequestByAdminDto requestDto) {
+    public Long createByAdmin(@RequestBody PostCreateRequestByAdminDto requestDto) {
         return postService.createByAdmin(requestDto);
     }
+
+//    @ExceptionHandler(IllegalAccessException.class)
+//    public ResponseEntity<String> illegalAccessException(IllegalAccessException exception) {
+//        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(exception.getMessage());
+//    }
 }
