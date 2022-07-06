@@ -38,9 +38,6 @@ public class User extends BaseTimeEntity {
     @Column
     private SnsChannel snsChannel;
 
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//    private List<Post> posts = new ArrayList<>();
-
     @Builder
     public User(String name, String email, String picture, Role role, SnsChannel snsChannel) {
         this.name = name;
@@ -60,9 +57,4 @@ public class User extends BaseTimeEntity {
     public String getRoleKey() {
         return this.role.getKey();
     }
-
-//    public void addPost(Post post) {
-//        this.getPosts().add(post);
-//        post.setUser(this);
-//    }
 }
