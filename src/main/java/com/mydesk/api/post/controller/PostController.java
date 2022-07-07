@@ -5,8 +5,6 @@ import com.mydesk.api.config.auth.dto.SessionUser;
 import com.mydesk.api.post.dto.*;
 import com.mydesk.api.post.service.PostService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,7 +32,7 @@ public class PostController {
     }
 
     @PutMapping("/api/v1/post/{id}")
-    public Long update(@LoginUser SessionUser userDto, @PathVariable Long id, @RequestBody PostUpdateRequestDto requestDto) throws Exception {
+    public PostResponseDto update(@LoginUser SessionUser userDto, @PathVariable Long id, @RequestBody PostUpdateRequestDto requestDto) throws Exception {
         return postService.update(userDto, id, requestDto);
     }
 
@@ -42,9 +40,4 @@ public class PostController {
     public Long createByAdmin(@RequestBody PostCreateRequestByAdminDto requestDto) {
         return postService.createByAdmin(requestDto);
     }
-
-//    @ExceptionHandler(IllegalAccessException.class)
-//    public ResponseEntity<String> illegalAccessException(IllegalAccessException exception) {
-//        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(exception.getMessage());
-//    }
 }

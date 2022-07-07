@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -48,18 +47,43 @@ public class PostService {
     }
 
     @Transactional
-    public Long update(SessionUser userDto, Long id, PostUpdateRequestDto requestDto) throws Exception {
+    public PostResponseDto update(SessionUser userDto, Long id, PostUpdateRequestDto requestDto) throws Exception {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다"));
 
-        // TODO: exception 전역 처리
-        if (post.getUser().getId().equals(userDto.getId())) {
+        if (!post.getUser().getId().equals(userDto.getId())) {
             throw new IllegalAccessException("해당 게시물을 수정할 수 없습니다.");
         }
 
-//        List<PostItem> postItems = postItemRepository.findByPostId(id);
-//        postItems.forEach(System.out::println);
-        return 1L;
+        post.update(
+                requestDto.getTitle(),
+                requestDto.getPicture()
+        );
+
+        List<PostItem> postItems = post.getPostItems();
+        List<PostItemUpdateRequestDto> postItemDtos = requestDto.getPostItems();
+        for (PostItemUpdateRequestDto postItemDto: postItemDtos) {
+            if (postItemDto.getId() == null) {
+                post.addPostItem(PostItem.builder()
+                                .name(postItemDto.getName())
+                                .content(postItemDto.getContent())
+                                .isFavorite(postItemDto.getIsFavorite())
+                        .build());
+            } else {
+                PostItem postItem = postItems.stream()
+                        .filter(pi -> pi.getId().equals(postItemDto.getId()))
+                        .findAny()
+                        .orElseThrow(() -> new IllegalArgumentException("해당 id의 아이템에는 접근할 수 없습니다"));
+                postItem.update(
+                        postItemDto.getName(),
+                        postItemDto.getContent(),
+                        postItemDto.getIsFavorite()
+                );
+            }
+        }
+        postRepository.save(post);
+
+        return new PostResponseDto(post);
     }
 
     @Transactional(readOnly = true)

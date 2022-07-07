@@ -57,11 +57,16 @@ public class Post extends BaseTimeEntity {
     }
 
     @Builder
-    public Post(String title, String picture,  Long postOrder){
+    public Post(String title, String picture, Long postOrder){
         this.title = title;
         this.picture = picture;
         this.status = PostStatus.CONFIRMING;
         this.postOrder = postOrder;
+    }
+
+    public void update(String title, String picture) {
+        this.title = title;
+        this.picture = picture;
     }
 
     public void accept() {

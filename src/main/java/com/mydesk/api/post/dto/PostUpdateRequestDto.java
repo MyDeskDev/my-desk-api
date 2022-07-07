@@ -1,18 +1,22 @@
 package com.mydesk.api.post.dto;
 
-import com.mydesk.api.post.domain.PostStatus;
+import lombok.Builder;
+import lombok.Getter;
 
+import java.util.List;
+
+@Getter
 public class PostUpdateRequestDto {
     private Long id;
     private String title;
     private String picture;
-    private PostStatus postStatus;
+    private List<PostItemUpdateRequestDto> postItems;
 
-    // TODO: postItem
-    public PostUpdateRequestDto(Long id, String title, String picture, PostStatus postStatus) {
+    @Builder
+    public PostUpdateRequestDto(Long id, String title, String picture, List<PostItemUpdateRequestDto> postItems) {
         this.id = id;
         this.title = title;
         this.picture = picture;
-        this.postStatus = postStatus;
+        this.postItems = postItems;
     }
 }

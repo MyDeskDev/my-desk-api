@@ -8,6 +8,8 @@ import com.mydesk.api.post.domain.PostRepository;
 import com.mydesk.api.post.domain.PostStatus;
 import com.mydesk.api.post.dto.PostCreateRequestByAdminDto;
 import com.mydesk.api.post.dto.PostCreateRequestDto;
+import com.mydesk.api.post.dto.PostItemUpdateRequestDto;
+import com.mydesk.api.post.dto.PostUpdateRequestDto;
 import com.mydesk.api.user.domain.Role;
 import com.mydesk.api.user.domain.User;
 import com.mydesk.api.user.domain.UserRepository;
@@ -25,6 +27,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
@@ -34,6 +37,7 @@ import static com.mydesk.api.Fixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
@@ -69,6 +73,7 @@ public class PostControllerTest {
     @AfterEach
     public void tearDown() throws Exception {
         postRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     private void setSessionUser() {
@@ -174,5 +179,55 @@ public class PostControllerTest {
         // then
         List<Post> all = postRepository.findAll();
         assertThat(all.size()).isEqualTo(0);
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser(roles="USER")
+    public void updatePost() throws Exception {
+        // given
+        setSessionUser();
+        User user = userRepository.findAll().get(0);
+        Post post = new Post(user, "title1", "testPicture", 1L);
+        PostItem postItem = new PostItem("name1", "content1", true);
+        post.addPostItem(postItem);
+        postRepository.save(post);
+
+        String newTitle = "new title";
+        String newPicture = "new picture";
+        String newPostItemName = "new postItem name";
+        PostItemUpdateRequestDto itemUpdateRequestDto1 = PostItemUpdateRequestDto.builder()
+                .name("new item add")
+                .content("new content")
+                .isFavorite(true)
+                .build();
+        PostItemUpdateRequestDto itemUpdateRequestDto2 = PostItemUpdateRequestDto.builder()
+                .id(postItem.getId())
+                .name(newPostItemName)
+                .content("new content")
+                .isFavorite(true)
+                .build();
+        List<PostItemUpdateRequestDto> itemUpdateRequestDtoList = new ArrayList<>();
+        itemUpdateRequestDtoList.addAll(List.of(itemUpdateRequestDto1, itemUpdateRequestDto2));
+        PostUpdateRequestDto requestDto = PostUpdateRequestDto.builder()
+                .id(post.getId())
+                .title(newTitle)
+                .picture(newPicture)
+                .postItems(itemUpdateRequestDtoList)
+                .build();
+
+        // when
+        String url = "http://localhost:" + port + "/api/v1/post/" + post.getId();
+        mvc.perform(put(url).session(session)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(requestDto)))
+                .andExpect(status().isOk());
+
+        Post updatedPost = postRepository.findAll().get(0);
+        PostItem updatedPostItem = updatedPost.getPostItems().get(0);
+        assertThat(updatedPost.getTitle()).isEqualTo(newTitle);
+        assertThat(updatedPost.getPicture()).isEqualTo(newPicture);
+        assertThat(updatedPost.getPostItems().size()).isEqualTo(2);
+        assertThat(updatedPostItem.getName()).isEqualTo(newPostItemName);
     }
 }

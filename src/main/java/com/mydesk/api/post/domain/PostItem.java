@@ -43,4 +43,10 @@ public class PostItem extends BaseTimeEntity {
         this.content = content;
         this.isFavorite = isFavorite;
     }
+
+    public void update(String name, String content, Boolean isFavorite) {
+        this.name = name;
+        this.content = content;
+        this.isFavorite = isFavorite;
+    }
 }
