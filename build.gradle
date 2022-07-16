@@ -39,6 +39,10 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	implementation 'org.projectlombok:lombok'
 
+	// aws
+	implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.1000')
+	implementation 'com.amazonaws:aws-java-sdk-s3'
+
 	// test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
