@@ -4,6 +4,9 @@ import com.mydesk.api.config.auth.LoginUser;
 import com.mydesk.api.config.auth.dto.SessionUser;
 import com.mydesk.api.post.dto.*;
 import com.mydesk.api.post.service.PostService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +24,11 @@ public class PostController {
         return postService.getPostList();
     }
 
+    @ApiOperation(value="포스트 생성")
+    @ApiResponses({
+          @ApiResponse(code = 200, message = "성공"),
+          @ApiResponse(code = 403, message = "권한 없음")
+    })
     @PostMapping("/api/v1/post")
     public Long create(@LoginUser SessionUser userDto, @RequestBody PostCreateRequestDto requestDto) {
         return postService.create(userDto, requestDto);
