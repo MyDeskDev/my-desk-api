@@ -11,12 +11,12 @@ public class PostResponseDto {
     private Long id;
     private String title;
     private String picture;
-    private List<PostItemResponseDto> postItems;
+    private List<DeskItemResponseDto> deskItems;
 
     public PostResponseDto(Post entity) {
         this.id = entity.getId();
         this.title = entity.getTitle();
         this.picture = entity.getPicture();
-        this.postItems = entity.getPostItems().stream().map(PostItemResponseDto::new).collect(Collectors.toList());
+        this.deskItems = entity.getDeskItems().stream().map(DeskItemResponseDto::new).collect(Collectors.toList());
     }
 }

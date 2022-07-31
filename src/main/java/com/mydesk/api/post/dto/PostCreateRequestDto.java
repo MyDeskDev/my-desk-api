@@ -1,9 +1,7 @@
 package com.mydesk.api.post.dto;
 
 import com.mydesk.api.post.domain.Post;
-import com.mydesk.api.post.domain.PostItem;
-import com.mydesk.api.post.domain.PostStatus;
-import com.mydesk.api.user.domain.User;
+import com.mydesk.api.post.domain.DeskItem;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -13,13 +11,13 @@ import java.util.List;
 public class PostCreateRequestDto {
     private String title;
     private String picture;
-    private List<PostItem> postItems;
+    private List<DeskItem> deskItems;
 
     @Builder
-    public PostCreateRequestDto(String title, String picture, List<PostItem> postItems) {
+    public PostCreateRequestDto(String title, String picture, List<DeskItem> deskItems) {
         this.title = title;
         this.picture = picture;
-        this.postItems = postItems;
+        this.deskItems = deskItems;
     }
 
     public Post getPost() {
@@ -28,8 +26,8 @@ public class PostCreateRequestDto {
                 .picture(picture)
                 .build();
 
-        if (postItems != null) {
-            post.addAllPostItem(postItems);
+        if (deskItems != null) {
+            post.addAllDeskItem(deskItems);
         }
 
         return post;

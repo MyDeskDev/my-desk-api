@@ -5,17 +5,15 @@ import com.mydesk.api.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor
 @Entity
-@ToString(of = {"id", "title", "picture", "status", "postOrder"})
+//@ToString(of = {"id", "title", "picture", "status", "postOrder"})
 public class Post extends BaseTimeEntity {
 
     @Id
@@ -31,7 +29,11 @@ public class Post extends BaseTimeEntity {
 
     @Column(nullable = false)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
-    private List<PostItem> postItems = new ArrayList<>();
+    private List<DeskContent> deskContents = new ArrayList<>();
+
+    @Column(nullable = false)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
+    private List<DeskItem> deskItems = new ArrayList<>();
 
     @Column
     private String picture;
@@ -77,14 +79,25 @@ public class Post extends BaseTimeEntity {
         this.status = PostStatus.REJECTED;
     }
 
-    public void addPostItem(PostItem postItem) {
-        getPostItems().add(postItem);
-        postItem.setPost(this);
+    public void addDeskItem(DeskItem deskItem) {
+        getDeskItems().add(deskItem);
+        deskItem.setPost(this);
     }
 
-    public void addAllPostItem(List<PostItem> postItems) {
-        for (PostItem postItem: postItems) {
-            this.addPostItem(postItem);
+    public void addAllDeskItem(List<DeskItem> deskItems) {
+        for (DeskItem deskItem : deskItems) {
+            this.addDeskItem(deskItem);
+        }
+    }
+
+    public void addDeskContent(DeskContent deskContent) {
+        getDeskContents().add(deskContent);
+        deskContent.setPost(this);
+    }
+
+    public void addAllDeskContent(List<DeskContent> deskContents) {
+        for (DeskContent deskContent : deskContents) {
+            this.addDeskContent(deskContent);
         }
     }
 }

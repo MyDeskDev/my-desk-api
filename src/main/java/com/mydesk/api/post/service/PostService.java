@@ -60,21 +60,21 @@ public class PostService {
                 requestDto.getPicture()
         );
 
-        List<PostItem> postItems = post.getPostItems();
-        List<PostItemUpdateRequestDto> postItemDtos = requestDto.getPostItems();
-        for (PostItemUpdateRequestDto postItemDto: postItemDtos) {
+        List<DeskItem> deskItems = post.getDeskItems();
+        List<DeskItemUpdateRequestDto> postItemDtos = requestDto.getDeskItems();
+        for (DeskItemUpdateRequestDto postItemDto: postItemDtos) {
             if (postItemDto.getId() == null) {
-                post.addPostItem(PostItem.builder()
+                post.addDeskItem(DeskItem.builder()
                                 .name(postItemDto.getName())
                                 .content(postItemDto.getContent())
                                 .isFavorite(postItemDto.getIsFavorite())
                         .build());
             } else {
-                PostItem postItem = postItems.stream()
+                DeskItem deskItem = deskItems.stream()
                         .filter(pi -> pi.getId().equals(postItemDto.getId()))
                         .findAny()
                         .orElseThrow(() -> new IllegalArgumentException("해당 id의 아이템에는 접근할 수 없습니다"));
-                postItem.update(
+                deskItem.update(
                         postItemDto.getName(),
                         postItemDto.getContent(),
                         postItemDto.getIsFavorite()

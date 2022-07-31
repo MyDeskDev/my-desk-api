@@ -1,16 +1,15 @@
 package com.mydesk.api.post.dto;
 
-import com.mydesk.api.post.domain.PostItem;
-import lombok.Builder;
+import com.mydesk.api.post.domain.DeskItem;
 import lombok.Getter;
 
 @Getter
-public class PostItemResponseDto {
+public class DeskItemResponseDto {
     private String name;
     private String content;
     private Boolean isFavorite;
 
-    public PostItemResponseDto(PostItem entity) {
+    public DeskItemResponseDto(DeskItem entity) {
         this.name = entity.getName();
         this.content = entity.getContent();
         this.isFavorite = entity.getIsFavorite();

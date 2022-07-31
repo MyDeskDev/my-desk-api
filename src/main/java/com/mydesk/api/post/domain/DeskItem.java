@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @ToString(of = {"id", "name", "content", "isFavorite"})
-public class PostItem extends BaseTimeEntity {
+public class DeskItem extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +38,7 @@ public class PostItem extends BaseTimeEntity {
     }
 
     @Builder
-    public PostItem(String name, String content, Boolean isFavorite) {
+    public DeskItem(String name, String content, Boolean isFavorite) {
         this.name = name;
         this.content = content;
         this.isFavorite = isFavorite;

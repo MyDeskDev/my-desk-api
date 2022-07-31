@@ -2,13 +2,13 @@ package com.mydesk.api.post.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mydesk.api.config.auth.dto.SessionUser;
+import com.mydesk.api.post.domain.DeskItem;
 import com.mydesk.api.post.domain.Post;
-import com.mydesk.api.post.domain.PostItem;
 import com.mydesk.api.post.domain.PostRepository;
 import com.mydesk.api.post.domain.PostStatus;
 import com.mydesk.api.post.dto.PostCreateRequestByAdminDto;
 import com.mydesk.api.post.dto.PostCreateRequestDto;
-import com.mydesk.api.post.dto.PostItemUpdateRequestDto;
+import com.mydesk.api.post.dto.DeskItemUpdateRequestDto;
 import com.mydesk.api.post.dto.PostUpdateRequestDto;
 import com.mydesk.api.user.domain.Role;
 import com.mydesk.api.user.domain.User;
@@ -94,15 +94,15 @@ public class PostControllerTest {
         // given
         String title = "title";
         String picture = "picture";
-        PostItem postItem1 = aPostItem().build();
-        PostItem postItem2 = aPostItem2().build();
-        List<PostItem> postItems = new ArrayList<>();
-        postItems.add(postItem1);
-        postItems.add(postItem2);
+        DeskItem deskItem1 = aDeskItem().build();
+        DeskItem deskItem2 = aDeskItem2().build();
+        List<DeskItem> deskItems = new ArrayList<>();
+        deskItems.add(deskItem1);
+        deskItems.add(deskItem2);
         PostCreateRequestDto requestDto = PostCreateRequestDto.builder()
                 .title(title)
                 .picture(picture)
-                .postItems(postItems)
+                .deskItems(deskItems)
                 .build();
 
         String url = "http://localhost:" + port + "/api/v1/post";
@@ -127,16 +127,16 @@ public class PostControllerTest {
         User user = userRepository.save(aUser().role(Role.USER).build());
         String title = "title";
         String picture = "picture";
-        PostItem postItem1 = aPostItem().build();
-        PostItem postItem2 = aPostItem2().build();
-        List<PostItem> postItems = new ArrayList<>();
-        postItems.add(postItem1);
-        postItems.add(postItem2);
+        DeskItem deskItem1 = aDeskItem().build();
+        DeskItem deskItem2 = aDeskItem2().build();
+        List<DeskItem> deskItems = new ArrayList<>();
+        deskItems.add(deskItem1);
+        deskItems.add(deskItem2);
         PostCreateRequestByAdminDto requestDto = PostCreateRequestByAdminDto.builder()
                 .userId(user.getId())
                 .title(title)
                 .picture(picture)
-                .postItems(postItems)
+                .deskItems(deskItems)
                 .build();
 
         String url = "http://localhost:" + port + "/api/v1/manage/post";
@@ -189,31 +189,31 @@ public class PostControllerTest {
         setSessionUser();
         User user = userRepository.findAll().get(0);
         Post post = new Post(user, "title1", "testPicture", 1L);
-        PostItem postItem = new PostItem("name1", "content1", true);
-        post.addPostItem(postItem);
+        DeskItem deskItem = new DeskItem("name1", "content1", true);
+        post.addDeskItem(deskItem);
         postRepository.save(post);
 
         String newTitle = "new title";
         String newPicture = "new picture";
         String newPostItemName = "new postItem name";
-        PostItemUpdateRequestDto itemUpdateRequestDto1 = PostItemUpdateRequestDto.builder()
+        DeskItemUpdateRequestDto itemUpdateRequestDto1 = DeskItemUpdateRequestDto.builder()
                 .name("new item add")
                 .content("new content")
                 .isFavorite(true)
                 .build();
-        PostItemUpdateRequestDto itemUpdateRequestDto2 = PostItemUpdateRequestDto.builder()
-                .id(postItem.getId())
+        DeskItemUpdateRequestDto itemUpdateRequestDto2 = DeskItemUpdateRequestDto.builder()
+                .id(deskItem.getId())
                 .name(newPostItemName)
                 .content("new content")
                 .isFavorite(true)
                 .build();
-        List<PostItemUpdateRequestDto> itemUpdateRequestDtoList = new ArrayList<>();
+        List<DeskItemUpdateRequestDto> itemUpdateRequestDtoList = new ArrayList<>();
         itemUpdateRequestDtoList.addAll(List.of(itemUpdateRequestDto1, itemUpdateRequestDto2));
         PostUpdateRequestDto requestDto = PostUpdateRequestDto.builder()
                 .id(post.getId())
                 .title(newTitle)
                 .picture(newPicture)
-                .postItems(itemUpdateRequestDtoList)
+                .deskItems(itemUpdateRequestDtoList)
                 .build();
 
         // when
@@ -224,10 +224,10 @@ public class PostControllerTest {
                 .andExpect(status().isOk());
 
         Post updatedPost = postRepository.findAll().get(0);
-        PostItem updatedPostItem = updatedPost.getPostItems().get(0);
+        DeskItem updatedDeskItem = updatedPost.getDeskItems().get(0);
         assertThat(updatedPost.getTitle()).isEqualTo(newTitle);
         assertThat(updatedPost.getPicture()).isEqualTo(newPicture);
-        assertThat(updatedPost.getPostItems().size()).isEqualTo(2);
-        assertThat(updatedPostItem.getName()).isEqualTo(newPostItemName);
+        assertThat(updatedPost.getDeskItems().size()).isEqualTo(2);
+        assertThat(updatedDeskItem.getName()).isEqualTo(newPostItemName);
     }
 }

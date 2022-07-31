@@ -1,15 +1,12 @@
 package com.mydesk.api.user.domain;
 
 import com.mydesk.api.config.BaseTimeEntity;
-import com.mydesk.api.post.domain.Post;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor

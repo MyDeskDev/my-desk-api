@@ -1,13 +1,12 @@
 package com.mydesk.api.post.repository;
 
+import com.mydesk.api.post.domain.DeskItem;
 import com.mydesk.api.post.domain.Post;
-import com.mydesk.api.post.domain.PostItem;
 import com.mydesk.api.post.domain.PostRepository;
 import com.mydesk.api.user.domain.Role;
 import com.mydesk.api.user.domain.SnsChannel;
 import com.mydesk.api.user.domain.User;
 import com.mydesk.api.user.domain.UserRepository;
-import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,12 +45,12 @@ public class PostQueryRepositoryTest {
         Post post2 = new Post("제목2", "pic2", 2L);
         Post post3 = new Post("제목3", "pic3", 1L);
 
-        PostItem postItem1 = new PostItem("아이템1", "설명1", true);
-        PostItem postItem2 = new PostItem("아이템2", "설명2", false);
-        PostItem postItem3 = new PostItem("아이템3", "설명3", true);
+        DeskItem deskItem1 = new DeskItem("아이템1", "설명1", true);
+        DeskItem deskItem2 = new DeskItem("아이템2", "설명2", false);
+        DeskItem deskItem3 = new DeskItem("아이템3", "설명3", true);
 
-        post1.addPostItem(postItem1);
-        post2.addAllPostItem(List.of(postItem2, postItem3));
+        post1.addDeskItem(deskItem1);
+        post2.addAllDeskItem(List.of(deskItem2, deskItem3));
         postRepository.saveAll(List.of(post1, post2, post3));
     }
 
