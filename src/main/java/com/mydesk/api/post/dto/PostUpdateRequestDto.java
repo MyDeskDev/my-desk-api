@@ -10,13 +10,13 @@ public class PostUpdateRequestDto {
     private Long id;
     private String title;
     private String picture;
-    private List<PostItemUpdateRequestDto> postItems;
+    private List<DeskItemUpdateRequestDto> deskItems;
 
     @Builder
-    public PostUpdateRequestDto(Long id, String title, String picture, List<PostItemUpdateRequestDto> postItems) {
+    public PostUpdateRequestDto(Long id, String title, String picture, List<DeskItemUpdateRequestDto> deskItems) {
         this.id = id;
         this.title = title;
         this.picture = picture;
-        this.postItems = postItems;
+        this.deskItems = deskItems;
     }
 }

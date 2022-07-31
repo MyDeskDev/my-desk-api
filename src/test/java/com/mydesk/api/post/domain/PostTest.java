@@ -5,7 +5,6 @@ import static com.mydesk.api.Fixtures.*;
 import com.mydesk.api.user.domain.User;
 import com.mydesk.api.user.domain.UserRepository;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,7 +14,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.transaction.Transactional;
 
-import static com.mydesk.api.Fixtures.aPostItem;
+import static com.mydesk.api.Fixtures.aDeskItem;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
@@ -25,10 +24,10 @@ import java.util.List;
 public class PostTest {
 
     @Autowired
-    PostRepository postRepository;
+    private PostRepository postRepository;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     private User user;
 
@@ -50,14 +49,14 @@ public class PostTest {
         post.setUser(user);
 
         // when
-        PostItem postItem = aPostItem().build();
-        PostItem postItem2 = aPostItem2().build();
-        post.addPostItem(postItem);
-        post.addPostItem(postItem2);
+        DeskItem deskItem = aDeskItem().build();
+        DeskItem deskItem2 = aDeskItem2().build();
+        post.addDeskItem(deskItem);
+        post.addDeskItem(deskItem2);
 
         // then
-        assertThat(post.getPostItems().size()).isEqualTo(2);
-        assertThat(postItem.getPost().getId()).isEqualTo(post.getId());
+        assertThat(post.getDeskItems().size()).isEqualTo(2);
+        assertThat(deskItem.getPost().getId()).isEqualTo(post.getId());
     }
 
     @Test
