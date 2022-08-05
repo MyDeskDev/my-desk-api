@@ -1,6 +1,8 @@
 package com.mydesk.api.post.dto;
 
+import com.mydesk.api.post.domain.ContentType;
 import com.mydesk.api.post.domain.Post;
+import com.mydesk.api.post.domain.PostContent;
 import lombok.Getter;
 
 import java.util.List;
@@ -11,12 +13,23 @@ public class PostResponseDto {
     private Long id;
     private String title;
     private String picture;
-    private List<DeskItemResponseDto> deskItems;
+    private List<PostContentResponseDto> deskContents;
+    private List<PostContentResponseDto> deskItems;
 
     public PostResponseDto(Post entity) {
         this.id = entity.getId();
         this.title = entity.getTitle();
         this.picture = entity.getPicture();
-        this.deskItems = entity.getDeskItems().stream().map(DeskItemResponseDto::new).collect(Collectors.toList());
+
+        List<PostContent> postContents = entity.getPostContents();
+        this.deskContents = postContents.stream()
+                .filter(postContent -> postContent.getContentType() == ContentType.desk)
+                .map(postContent -> PostContentResponseDto.deskContentResponseDto(postContent))
+                .collect(Collectors.toList());
+
+        this.deskItems = postContents.stream()
+                .filter(postContent -> postContent.getContentType() == ContentType.item)
+                .map(postContent -> PostContentResponseDto.deskItemResponseDto(postContent))
+                .collect(Collectors.toList());
     }
 }

@@ -1,7 +1,7 @@
 package com.mydesk.api.post.repository;
 
-import com.mydesk.api.post.domain.DeskItem;
 import com.mydesk.api.post.domain.Post;
+import com.mydesk.api.post.domain.PostContent;
 import com.mydesk.api.post.domain.PostRepository;
 import com.mydesk.api.user.domain.Role;
 import com.mydesk.api.user.domain.SnsChannel;
@@ -42,15 +42,15 @@ public class PostQueryRepositoryTest {
         System.out.println("user1.getId() = " + user1.getId());
 
         Post post1 = new Post(user1, "제목1", "pic1", 3L);
-        Post post2 = new Post("제목2", "pic2", 2L);
-        Post post3 = new Post("제목3", "pic3", 1L);
+        Post post2 = new Post(user1, "제목2", "pic2", 2L);
+        Post post3 = new Post(user1, "제목3", "pic3", 1L);
 
-        DeskItem deskItem1 = new DeskItem("아이템1", "설명1", true);
-        DeskItem deskItem2 = new DeskItem("아이템2", "설명2", false);
-        DeskItem deskItem3 = new DeskItem("아이템3", "설명3", true);
+        PostContent deskItem1 = PostContent.deskContent("deskPicture", "설명1", 1);
+        PostContent deskItem2 = PostContent.deskItem("아이템1", "itemPicture", "아이템 설명", true, 2);
+        PostContent deskItem3 = PostContent.deskItem("아이템2", "itemPicture2", "아이템 설명2", false, 3);
 
-        post1.addDeskItem(deskItem1);
-        post2.addAllDeskItem(List.of(deskItem2, deskItem3));
+        post1.addPostContent(deskItem1);
+        post2.addAllPostContent(List.of(deskItem2, deskItem3));
         postRepository.saveAll(List.of(post1, post2, post3));
     }
 

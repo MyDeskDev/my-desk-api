@@ -49,13 +49,13 @@ public class PostTest {
         post.setUser(user);
 
         // when
-        DeskItem deskItem = aDeskItem().build();
-        DeskItem deskItem2 = aDeskItem2().build();
-        post.addDeskItem(deskItem);
-        post.addDeskItem(deskItem2);
+        PostContent postContent = aDeskContent();
+        PostContent deskItem = aDeskItem();
+        post.addPostContent(postContent);
+        post.addPostContent(deskItem);
 
         // then
-        assertThat(post.getDeskItems().size()).isEqualTo(2);
+        assertThat(post.getPostContents().size()).isEqualTo(2);
         assertThat(deskItem.getPost().getId()).isEqualTo(post.getId());
     }
 

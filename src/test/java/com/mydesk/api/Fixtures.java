@@ -1,13 +1,12 @@
 package com.mydesk.api;
 
+import com.mydesk.api.post.domain.PostContent;
 import com.mydesk.api.user.domain.Role;
 import com.mydesk.api.user.domain.SnsChannel;
 import com.mydesk.api.user.domain.User;
 import com.mydesk.api.user.domain.User.UserBuilder;
 import com.mydesk.api.post.domain.Post;
 import com.mydesk.api.post.domain.Post.PostBuilder;
-import com.mydesk.api.post.domain.DeskItem;
-import com.mydesk.api.post.domain.DeskItem.DeskItemBuilder;
 
 public class Fixtures {
     public static UserBuilder aUser() {
@@ -19,18 +18,12 @@ public class Fixtures {
                 .snsChannel(SnsChannel.GOOGLE);
     }
 
-    public static DeskItemBuilder aDeskItem() {
-        return DeskItem.builder()
-                .name("마우스")
-                .content("좋은 마우스입니다.")
-                .isFavorite(true);
+    public static PostContent aDeskContent() {
+        return PostContent.deskContent("deskPicture", "deskContent", 1);
     }
 
-    public static DeskItemBuilder aDeskItem2() {
-        return DeskItem.builder()
-                .name("모니터")
-                .content("큰 모니터입니다.")
-                .isFavorite(false);
+    public static PostContent aDeskItem() {
+        return PostContent.deskItem("itemName", "itemPicture", "itemContent", true, 2);
     }
 
     public static PostBuilder aPost() {

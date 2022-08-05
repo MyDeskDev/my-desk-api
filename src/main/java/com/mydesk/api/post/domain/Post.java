@@ -13,7 +13,6 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Entity
-//@ToString(of = {"id", "title", "picture", "status", "postOrder"})
 public class Post extends BaseTimeEntity {
 
     @Id
@@ -29,11 +28,7 @@ public class Post extends BaseTimeEntity {
 
     @Column(nullable = false)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
-    private List<DeskContent> deskContents = new ArrayList<>();
-
-    @Column(nullable = false)
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
-    private List<DeskItem> deskItems = new ArrayList<>();
+    private List<PostContent> postContents = new ArrayList<>();
 
     @Column
     private String picture;
@@ -58,14 +53,6 @@ public class Post extends BaseTimeEntity {
         this.postOrder = postOrder;
     }
 
-    @Builder
-    public Post(String title, String picture, Long postOrder){
-        this.title = title;
-        this.picture = picture;
-        this.status = PostStatus.CONFIRMING;
-        this.postOrder = postOrder;
-    }
-
     public void update(String title, String picture) {
         this.title = title;
         this.picture = picture;
@@ -79,25 +66,14 @@ public class Post extends BaseTimeEntity {
         this.status = PostStatus.REJECTED;
     }
 
-    public void addDeskItem(DeskItem deskItem) {
-        getDeskItems().add(deskItem);
-        deskItem.setPost(this);
+    public void addPostContent(PostContent postContent) {
+        getPostContents().add(postContent);
+        postContent.setPost(this);
     }
 
-    public void addAllDeskItem(List<DeskItem> deskItems) {
-        for (DeskItem deskItem : deskItems) {
-            this.addDeskItem(deskItem);
-        }
-    }
-
-    public void addDeskContent(DeskContent deskContent) {
-        getDeskContents().add(deskContent);
-        deskContent.setPost(this);
-    }
-
-    public void addAllDeskContent(List<DeskContent> deskContents) {
-        for (DeskContent deskContent : deskContents) {
-            this.addDeskContent(deskContent);
+    public void addAllPostContent(List<PostContent> postContents) {
+        for (PostContent postContent : postContents) {
+            this.addPostContent(postContent);
         }
     }
 }

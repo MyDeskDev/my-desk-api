@@ -39,11 +39,6 @@ public class PostController {
         return postService.getPost(id);
     }
 
-    @PutMapping("/api/v1/post/{id}")
-    public PostResponseDto update(@LoginUser SessionUser userDto, @PathVariable Long id, @RequestBody PostUpdateRequestDto requestDto) throws Exception {
-        return postService.update(userDto, id, requestDto);
-    }
-
     @PostMapping("/api/v1/manage/post")
     public Long createByAdmin(@RequestBody PostCreateRequestByAdminDto requestDto) {
         return postService.createByAdmin(requestDto);

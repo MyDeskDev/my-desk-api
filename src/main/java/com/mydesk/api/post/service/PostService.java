@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -20,7 +21,7 @@ public class PostService {
     private final PostQueryRepository postQueryRepository;
 
     @Transactional
-    public Long create(SessionUser userDto, PostCreateRequestDto requestDto) {
+    public Long create(SessionUser userDto, @Valid PostCreateRequestDto requestDto) {
         User user = userRepository.findById(userDto.getId())
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 사용자입니다."));
         Post post = requestDto.getPost();
@@ -46,45 +47,6 @@ public class PostService {
         return postQueryRepository.getPostList();
     }
 
-    @Transactional
-    public PostResponseDto update(SessionUser userDto, Long id, PostUpdateRequestDto requestDto) throws Exception {
-        Post post = postRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다"));
-
-        if (!post.getUser().getId().equals(userDto.getId())) {
-            throw new IllegalAccessException("해당 게시물을 수정할 수 없습니다.");
-        }
-
-        post.update(
-                requestDto.getTitle(),
-                requestDto.getPicture()
-        );
-
-        List<DeskItem> deskItems = post.getDeskItems();
-        List<DeskItemUpdateRequestDto> postItemDtos = requestDto.getDeskItems();
-        for (DeskItemUpdateRequestDto postItemDto: postItemDtos) {
-            if (postItemDto.getId() == null) {
-                post.addDeskItem(DeskItem.builder()
-                                .name(postItemDto.getName())
-                                .content(postItemDto.getContent())
-                                .isFavorite(postItemDto.getIsFavorite())
-                        .build());
-            } else {
-                DeskItem deskItem = deskItems.stream()
-                        .filter(pi -> pi.getId().equals(postItemDto.getId()))
-                        .findAny()
-                        .orElseThrow(() -> new IllegalArgumentException("해당 id의 아이템에는 접근할 수 없습니다"));
-                deskItem.update(
-                        postItemDto.getName(),
-                        postItemDto.getContent(),
-                        postItemDto.getIsFavorite()
-                );
-            }
-        }
-        postRepository.save(post);
-
-        return new PostResponseDto(post);
-    }
 
     @Transactional(readOnly = true)
     public PostResponseDto getPost(Long id) {
