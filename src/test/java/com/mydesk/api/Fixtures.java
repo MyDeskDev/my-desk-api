@@ -19,7 +19,7 @@ public class Fixtures {
     }
 
     public static PostContent aDeskContent() {
-        return PostContent.deskContent("deskPicture", "deskContent", 1);
+        return PostContent.deskDescription( "deskContent", 1);
     }
 
     public static PostContent aDeskItem() {

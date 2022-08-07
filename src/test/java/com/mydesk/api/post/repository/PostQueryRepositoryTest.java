@@ -45,8 +45,8 @@ public class PostQueryRepositoryTest {
         Post post2 = new Post(user1, "제목2", "pic2", 2L);
         Post post3 = new Post(user1, "제목3", "pic3", 1L);
 
-        PostContent deskItem1 = PostContent.deskContent("deskPicture", "설명1", 1);
-        PostContent deskItem2 = PostContent.deskItem("아이템1", "itemPicture", "아이템 설명", true, 2);
+        PostContent deskItem1 = PostContent.deskPicture("deskPicture", 1);
+        PostContent deskItem2 = PostContent.deskDescription("deskPicture", 2);
         PostContent deskItem3 = PostContent.deskItem("아이템2", "itemPicture2", "아이템 설명2", false, 3);
 
         post1.addPostContent(deskItem1);
