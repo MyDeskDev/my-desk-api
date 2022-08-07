@@ -1,5 +1,6 @@
 package com.mydesk.api.post.dto;
 
+import com.mydesk.api.post.domain.ContentType;
 import com.mydesk.api.post.domain.PostContent;
 import lombok.Getter;
 
@@ -8,16 +9,22 @@ import javax.validation.constraints.NotNull;
 @Getter
 public class DeskContentCreateDto {
     @NotNull
-    private String picture;
+    private String type;
     @NotNull
-    private String content;
+    private String value;
 
-    public DeskContentCreateDto(String picture, String content) {
-        this.picture = picture;
-        this.content = content;
+    public DeskContentCreateDto(String type, String value) {
+        this.type = type;
+        this.value = value;
     }
 
     public PostContent toEntity(int contentOrder) {
-        return PostContent.deskContent(picture, content, contentOrder);
+        if (this.type.equals(ContentType.deskDescription.getKey())) {
+            return PostContent.deskDescription(value, contentOrder);
+        }
+        if (this.type.equals(ContentType.deskPicture.getKey())) {
+            return PostContent.deskPicture(value, contentOrder);
+        }
+        throw new IllegalArgumentException("잘못된 타입입니다.");
     }
 }

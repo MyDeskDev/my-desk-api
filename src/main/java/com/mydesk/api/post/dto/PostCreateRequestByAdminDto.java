@@ -5,19 +5,21 @@ import com.mydesk.api.post.domain.PostContent;
 import lombok.Builder;
 import lombok.Getter;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Getter
 public class PostCreateRequestByAdminDto {
+    @NotNull(message = "userId cannot be null")
     private Long userId;
-    @NotNull
+    @NotNull(message = "title cannot be null")
     private String title;
-    @NotNull
+    @NotNull(message = "picture cannot be null")
     private String picture;
-    @NotNull
+    @NotEmpty(message = "deskContent cannot be null")
     private List<DeskContentCreateDto> deskContents;
-    @NotNull
+    @NotEmpty(message = "deskItem cannot be null")
     private List<DeskItemCreateDto> deskItems;
 
     @Builder

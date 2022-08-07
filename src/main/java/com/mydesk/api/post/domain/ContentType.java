@@ -7,7 +7,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum ContentType {
 
-    desk("desk", "책상"),
+    deskPicture("deskPicture", "책상사진"),
+    deskDescription("deskDescription", "deskDescription"),
     item("item", "아이템");
 
     private final String key;

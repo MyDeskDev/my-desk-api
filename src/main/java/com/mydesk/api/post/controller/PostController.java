@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -30,17 +31,17 @@ public class PostController {
           @ApiResponse(code = 403, message = "권한 없음")
     })
     @PostMapping("/api/v1/post")
-    public Long create(@LoginUser SessionUser userDto, @RequestBody PostCreateRequestDto requestDto) {
+    public Long create(@LoginUser SessionUser userDto,@Valid @RequestBody PostCreateRequestDto requestDto) {
         return postService.create(userDto, requestDto);
     }
 
     @GetMapping("/api/v1/post/{id}")
-    public PostResponseDto getPost(@PathVariable Long id) {
+    public PostResponseDto getPost(@PathVariable Long id) throws IllegalArgumentException {
         return postService.getPost(id);
     }
 
     @PostMapping("/api/v1/manage/post")
-    public Long createByAdmin(@RequestBody PostCreateRequestByAdminDto requestDto) {
+    public Long createByAdmin(@Valid @RequestBody PostCreateRequestByAdminDto requestDto) {
         return postService.createByAdmin(requestDto);
     }
 }

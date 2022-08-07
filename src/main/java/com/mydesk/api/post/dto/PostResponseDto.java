@@ -23,13 +23,13 @@ public class PostResponseDto {
 
         List<PostContent> postContents = entity.getPostContents();
         this.deskContents = postContents.stream()
-                .filter(postContent -> postContent.getContentType() == ContentType.desk)
-                .map(postContent -> PostContentResponseDto.deskContentResponseDto(postContent))
+                .filter(postContent -> !postContent.getContentType().equals(ContentType.item))
+                .map(PostContentResponseDto::deskContentResponseDto)
                 .collect(Collectors.toList());
 
         this.deskItems = postContents.stream()
-                .filter(postContent -> postContent.getContentType() == ContentType.item)
-                .map(postContent -> PostContentResponseDto.deskItemResponseDto(postContent))
+                .filter(postContent -> postContent.getContentType().equals(ContentType.item))
+                .map(PostContentResponseDto::deskItemResponseDto)
                 .collect(Collectors.toList());
     }
 }

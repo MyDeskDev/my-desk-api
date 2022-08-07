@@ -28,10 +28,10 @@ public class PostContent extends BaseTimeEntity {
     @Column
     private String name;
 
-    @Column(nullable = false)
+    @Column
     private String picture;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     @Column(nullable = false)
@@ -40,8 +40,12 @@ public class PostContent extends BaseTimeEntity {
     @Column
     private int contentOrder;
 
-    public static PostContent deskContent(String picture, String content, int contentOrder) {
-        return new PostContent(ContentType.desk, null, content, picture, null, contentOrder);
+    public static PostContent deskDescription(String content, int contentOrder) {
+        return new PostContent(ContentType.deskDescription, null, null, content, null, contentOrder);
+    }
+
+    public static PostContent deskPicture(String picture, int contentOrder) {
+        return new PostContent(ContentType.deskPicture, null, picture, null, null, contentOrder);
     }
 
     public static PostContent deskItem(String name, String picture, String content, Boolean isFavorite, int contentOrder) {
