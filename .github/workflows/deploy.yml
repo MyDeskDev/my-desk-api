@@ -51,5 +51,5 @@ jobs:
           --application-name mydesk-api
           --deployment-config-name CodeDeployDefault.OneAtATime
           --deployment-group-name mydesk-api-group
-          --s3-location bucket=mydesk-api-archive,key=$GITHUB_SHA.zip
+          --s3-location bucket=mydesk-api-archive,key=$GITHUB_SHA.zip,bundleType=zip
 
