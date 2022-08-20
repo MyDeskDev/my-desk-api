@@ -45,3 +45,11 @@ jobs:
       - name: upload zip file to s3
         run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://mydesk-api-archive/$GITHUB_SHA.zip
 
+      - name: trigger aws codedeploy
+        run: >
+          aws deploy create-deployment
+          --application-name mydesk-api
+          --deployment-config-name CodeDeployDefault.OneAtATime
+          --deployment-group-name mydesk-api-group
+          --s3-location bucket=mydesk-api-archive,key=$GITHUB_SHA.zip
+
