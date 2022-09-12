@@ -1,6 +1,7 @@
 package com.mydesk.api.post.service;
 
 import com.mydesk.api.config.auth.dto.SessionUser;
+import com.mydesk.api.generic.PageRequest;
 import com.mydesk.api.post.domain.*;
 import com.mydesk.api.post.dto.*;
 import com.mydesk.api.user.domain.User;
@@ -43,8 +44,8 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public List<PostListResponseDto> getPostList() {
-        return postQueryRepository.getPostList();
+    public List<PostListResponseDto> getPostList(PageRequest pageRequest) {
+        return postQueryRepository.getPostList(pageRequest.of());
     }
 
 

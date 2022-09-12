@@ -2,6 +2,7 @@ package com.mydesk.api.post.controller;
 
 import com.mydesk.api.config.auth.LoginUser;
 import com.mydesk.api.config.auth.dto.SessionUser;
+import com.mydesk.api.generic.PageRequest;
 import com.mydesk.api.post.dto.*;
 import com.mydesk.api.post.service.PostService;
 import io.swagger.annotations.ApiOperation;
@@ -20,9 +21,8 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping("/api/v1/post")
-    public List<PostListResponseDto> getPostList() {
-//        TODO: paging, searching
-        return postService.getPostList();
+    public List<PostListResponseDto> getPostList(PageRequest pageRequest) {
+        return postService.getPostList(pageRequest);
     }
 
     @ApiOperation(value="포스트 생성")
