@@ -35,6 +35,7 @@ jobs:
         run: |
           mkdir before-deploy
           cp scripts/*.sh before-deploy/
+          cp appspec.yml before-deploy/
           cp build/libs/*.jar before-deploy/
           cd before-deploy && zip -r before-deploy *
           cd ../ && mkdir deploy
