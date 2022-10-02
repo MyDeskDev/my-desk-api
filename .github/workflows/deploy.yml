@@ -32,7 +32,7 @@ jobs:
         run: ./gradlew clean build
 
       - name: make zip file for archive
-        run: >
+        run: |
           mkdir before-deploy
           cp scripts/*.sh before-deploy/
           cp build/lib/*.jar before-deploy/
