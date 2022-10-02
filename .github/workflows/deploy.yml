@@ -35,7 +35,7 @@ jobs:
         run: |
           mkdir before-deploy
           cp scripts/*.sh before-deploy/
-          cp build/lib/*.jar before-deploy/
+          cp build/libs/*.jar before-deploy/
           cd before-deploy && zip -r before-deploy *
           cd ../ && mkdir deploy
           mv before-deploy/before-deploy.zip deploy/$GITHUB_SHA.zip
