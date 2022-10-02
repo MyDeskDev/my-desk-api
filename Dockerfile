@@ -6,5 +6,6 @@ COPY ${JAR_FILE} app.jar
 COPY application-db.yml /application-db.yml
 
 ENTRYPOINT ["/bin/sh","-c", \
-    "java -Dspring.config.location=classpath:/application-${IDLE_PROFILE}.yml,/application-db.yml \
-    -Dspring.profiles.active=${IDLE_PROFILE} -jar ./app.jar"]
+    "java -jar -Dspring.config.location=classpath:/application.properties,/home/ec2-user/app/application-oauth.properties, \
+    /home/ec2-user/app/application-aws.properties,/home/ec2-user/app/application-real-db.properties \
+    -Dspring.profiles.active=real ./app.jar"]
