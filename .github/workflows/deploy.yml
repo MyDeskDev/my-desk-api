@@ -32,7 +32,13 @@ jobs:
         run: ./gradlew clean build
 
       - name: make zip file for archive
-        run: zip -qq -r ./$GITHUB_SHA.zip .
+        run: >
+          mkdir before-deploy
+          cp scripts/*.sh before-deploy/
+          cp build/lib/*.jar before-deploy/
+          cd before-deploy && zip -r before-deploy *
+          cd ../ && mkdir deploy
+          mv before-deploy/before-deploy.zip deploy/$GITHUB_SHA.zip
 
       - name: configure aws credientials
         uses: aws-actions/configure-aws-credentials@v1
@@ -42,7 +48,7 @@ jobs:
           aws-region: ap-northeast-2
 
       - name: upload zip file to s3
-        run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://mydesk-api-archive/$GITHUB_SHA.zip
+        run: aws s3 cp --region ap-northeast-2 deploy/$GITHUB_SHA.zip s3://mydesk-api-archive/$GITHUB_SHA.zip
 
       - name: trigger aws codedeploy
         run: >
