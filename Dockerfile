@@ -2,10 +2,13 @@ FROM amazoncorretto:11-alpine-jdk
 
 ARG JAR_FILE
 
-COPY ${JAR_FILE} app.jar
-COPY application-db.yml /application-db.yml
+ARG MAIN_DIRECTORY=/usr/mydesk-api
+WORKDIR $MAIN_DIRECTORY
+
+COPY *.properties ./
+COPY ${JAR_FILE} ./app.jar
 
 ENTRYPOINT ["/bin/sh","-c", \
-    "java -jar -Dspring.config.location=classpath:/application.properties,/home/ec2-user/app/application-oauth.properties, \
-    /home/ec2-user/app/application-aws.properties,/home/ec2-user/app/application-real-db.properties \
+    "java -jar -Dspring.config.location=classpath:/application.properties,/usr/mydesk-api/application-oauth.properties,\
+    /usr/mydesk-api/application-aws.properties,/usr/mydesk-api/application-real-db.properties \
     -Dspring.profiles.active=real ./app.jar"]
