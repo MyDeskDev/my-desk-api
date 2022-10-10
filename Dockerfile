@@ -9,6 +9,5 @@ COPY *.properties ./
 COPY ${JAR_FILE} ./app.jar
 
 ENTRYPOINT ["/bin/sh","-c", \
-    "java -jar -Dspring.config.location=classpath:/application.properties,/usr/mydesk-api/application-oauth.properties,\
-    /usr/mydesk-api/application-aws.properties,/usr/mydesk-api/application-real-db.properties \
-    -Dspring.profiles.active=real ./app.jar"]
+    "java -jar -Dspring.config.location=classpath:/application.properties,/usr/mydesk-api/application-oauth.properties,/usr/mydesk-api/application-aws.properties,/usr/mydesk-api/application-real-db.properties -Dspring.profiles.active=real ./app.jar"
+]
