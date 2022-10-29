@@ -14,11 +14,6 @@ public class TestController {
     @Autowired
     private PostService postService;
 
-    @PostMapping("/test")
-    public Long test(@RequestBody PostCreateRequestByAdminDto requestDto) {
-        return postService.createByAdmin(requestDto);
-    }
-
     @GetMapping("/api/v1/test")
     private String userTest() {
         return "test";
