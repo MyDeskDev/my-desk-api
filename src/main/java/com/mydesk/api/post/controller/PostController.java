@@ -23,7 +23,7 @@ public class PostController {
 
     // TODO: json 파일을 내려주는걸로 할지
     @GetMapping("/api/v1/types")
-    public Map<String, List<Map<String, String>>> getTypes() {
+    public Map<String, List<String>> getTypes() {
         return TypeResponseDto.getTypes();
     }
 
@@ -47,7 +47,7 @@ public class PostController {
         return postService.getPost(id);
     }
 
-//    @PostMapping("/api/v1/manage/post")
+//    @PostMapping("/api/v1/manage/posts")
 //    public Long createByAdmin(@Valid @RequestBody PostCreateRequestByAdminDto requestDto) {
 //        return postService.createByAdmin(requestDto);
 //    }
