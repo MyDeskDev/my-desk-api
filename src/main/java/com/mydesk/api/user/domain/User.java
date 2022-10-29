@@ -11,7 +11,6 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-@ToString(of = {"id", "name", "email", "picture", "role", "snsChannel"})
 public class User extends BaseTimeEntity {
 
     @Id
@@ -21,8 +20,30 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false)
     private String name;
 
+    @Column
+    private String nickname;
+
     @Column(nullable = false)
     private String email;
+
+    @Enumerated(EnumType.STRING)
+    @Column
+    private Gender gender;
+
+    @Enumerated(EnumType.STRING)
+    @Column
+    private Age age;
+
+    @Column
+    private String nationality;
+
+    @Enumerated(EnumType.STRING)
+    @Column
+    private BloodType bloodType;
+
+    @Enumerated(EnumType.STRING)
+    @Column
+    private MBTI mbti;
 
     @Column(nullable = false)
     private String picture;
@@ -36,12 +57,33 @@ public class User extends BaseTimeEntity {
     private SnsChannel snsChannel;
 
     @Builder
-    public User(String name, String email, String picture, Role role, SnsChannel snsChannel) {
+    public User(String name,
+                String nickname,
+                String email,
+                Gender gender,
+                Age age,
+                String nationality,
+                BloodType bloodType,
+                MBTI mbti,
+                String picture,
+                Role role,
+                SnsChannel snsChannel)
+    {
         this.name = name;
+        this.nickname = nickname;
         this.email = email;
+        this.gender = gender;
+        this.age = age;
+        this.nationality = nationality;
+        this.bloodType = bloodType;
+        this.mbti = mbti;
         this.picture = picture;
         this.role = role;
         this.snsChannel = snsChannel;
+    }
+
+    public String getRoleKey() {
+        return this.role.getKey();
     }
 
     public User update(String name, String picture) {
@@ -49,9 +91,5 @@ public class User extends BaseTimeEntity {
         this.picture = picture;
 
         return this;
-    }
-
-    public String getRoleKey() {
-        return this.role.getKey();
     }
 }

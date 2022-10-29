@@ -27,7 +27,7 @@ public class PostController {
         return TypeResponseDto.getTypes();
     }
 
-    @GetMapping("/api/v1/post")
+    @GetMapping("/api/v1/posts")
     public List<PostListResponseDto> getPostList(PageRequest pageRequest) {
         return postService.getPostList(pageRequest);
     }
@@ -37,18 +37,18 @@ public class PostController {
           @ApiResponse(code = 200, message = "성공"),
           @ApiResponse(code = 403, message = "권한 없음")
     })
-    @PostMapping("/api/v1/post")
-    public Long create(@LoginUser SessionUser userDto,@Valid @RequestBody PostCreateRequestDto requestDto) {
-        return postService.create(userDto, requestDto);
+    @PostMapping("/api/v1/posts")
+    public Long create(@Valid @RequestBody PostCreateRequestDto requestDto) {
+        return postService.create(requestDto);
     }
 
-    @GetMapping("/api/v1/post/{id}")
+    @GetMapping("/api/v1/posts/{id}")
     public PostResponseDto getPost(@PathVariable Long id) throws IllegalArgumentException {
         return postService.getPost(id);
     }
 
-    @PostMapping("/api/v1/manage/post")
-    public Long createByAdmin(@Valid @RequestBody PostCreateRequestByAdminDto requestDto) {
-        return postService.createByAdmin(requestDto);
-    }
+//    @PostMapping("/api/v1/manage/post")
+//    public Long createByAdmin(@Valid @RequestBody PostCreateRequestByAdminDto requestDto) {
+//        return postService.createByAdmin(requestDto);
+//    }
 }

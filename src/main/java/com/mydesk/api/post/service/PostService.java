@@ -22,26 +22,29 @@ public class PostService {
     private final PostQueryRepository postQueryRepository;
 
     @Transactional
-    public Long create(SessionUser userDto, @Valid PostCreateRequestDto requestDto) {
-        User user = userRepository.findById(userDto.getId())
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 사용자입니다."));
+    public Long create(@Valid PostCreateRequestDto requestDto) {
+        // TODO: 회원체계가 잡힌 후에
+//        User user = userRepository.findById(userDto.getId())
+//                .orElseThrow(() -> new IllegalArgumentException("잘못된 사용자입니다."));
         Post post = requestDto.getPost();
+        User user = requestDto.getUser();
         post.setUser(user);
+        userRepository.save(user);
         postRepository.save(post);
 
         return post.getId();
     }
 
-    @Transactional
-    public Long createByAdmin(PostCreateRequestByAdminDto requestDto) {
-        User user = userRepository.findById(requestDto.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 사용자입니다."));
-        Post post = requestDto.getPost();
-        post.setUser(user);
-        postRepository.save(post);
-
-        return post.getId();
-    }
+//    @Transactional
+//    public Long createByAdmin(PostCreateRequestByAdminDto requestDto) {
+//        User user = userRepository.findById(requestDto.getUserId())
+//                .orElseThrow(() -> new IllegalArgumentException("잘못된 사용자입니다."));
+//        Post post = requestDto.getPost();
+//        post.setUser(user);
+//        postRepository.save(post);
+//
+//        return post.getId();
+//    }
 
     @Transactional(readOnly = true)
     public List<PostListResponseDto> getPostList(PageRequest pageRequest) {

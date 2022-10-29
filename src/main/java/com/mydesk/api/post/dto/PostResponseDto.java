@@ -11,15 +11,11 @@ import java.util.stream.Collectors;
 @Getter
 public class PostResponseDto {
     private Long id;
-    private String title;
-    private String picture;
     private List<PostContentResponseDto> deskContents;
     private List<PostContentResponseDto> deskItems;
 
     public PostResponseDto(Post entity) {
         this.id = entity.getId();
-        this.title = entity.getTitle();
-        this.picture = entity.getPicture();
 
         List<PostContent> postContents = entity.getPostContents();
         this.deskContents = postContents.stream()

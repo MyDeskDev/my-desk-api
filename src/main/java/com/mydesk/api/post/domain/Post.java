@@ -24,20 +24,27 @@ public class Post extends BaseTimeEntity {
     private User user;
 
     @Column(nullable = false)
-    private String title;
+    private String spaceType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private DeskConcept deskConcept;
+
+    @Column(nullable = false)
+    private String deskSummary;
+
+    @Column(nullable = false)
+    private int cost;
 
     @Column(nullable = false)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
     private List<PostContent> postContents = new ArrayList<>();
 
-    @Column
-    private String picture;
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private PostStatus status;
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column
     private Long postOrder;
 
     public void setUser(User user) {
@@ -45,17 +52,14 @@ public class Post extends BaseTimeEntity {
     }
 
     @Builder
-    public Post(User user, String title, String picture, Long postOrder){
+    public Post(User user, String spaceType, DeskConcept deskConcept, String deskSummary, int cost, Long postOrder){
         this.user = user;
-        this.title = title;
-        this.picture = picture;
+        this.spaceType = spaceType;
+        this.deskConcept = deskConcept;
+        this.deskSummary = deskSummary;
+        this.cost = cost;
         this.status = PostStatus.CONFIRMING;
         this.postOrder = postOrder;
-    }
-
-    public void update(String title, String picture) {
-        this.title = title;
-        this.picture = picture;
     }
 
     public void accept() {
