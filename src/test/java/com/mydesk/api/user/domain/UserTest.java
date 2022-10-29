@@ -34,7 +34,7 @@ public class UserTest {
 
         //then
         User user = users.get(0);
-        assertThat(user.getName()).isEqualTo("yhc");
+        assertThat(user.getName()).isEqualTo("양현철");
         assertThat(user.getEmail()).isEqualTo("hyunchul.yang@gmail.com");
         assertThat(user.getSnsChannel()).isEqualTo(SnsChannel.GOOGLE);
     }

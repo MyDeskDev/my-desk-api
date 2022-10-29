@@ -1,5 +1,6 @@
 package com.mydesk.api;
 
+import com.mydesk.api.post.domain.DeskConcept;
 import com.mydesk.api.post.domain.PostContent;
 import com.mydesk.api.user.domain.Role;
 import com.mydesk.api.user.domain.SnsChannel;
@@ -28,8 +29,10 @@ public class Fixtures {
 
     public static PostBuilder aPost() {
         return Post.builder()
-                .title("test")
-                .picture("pic")
+                .spaceType("원룸3")
+                .deskConcept(DeskConcept.MODERN)
+                .deskSummary("제 원룸책상3입니다.")
+                .cost(20)
                 .postOrder(1L);
     }
 }

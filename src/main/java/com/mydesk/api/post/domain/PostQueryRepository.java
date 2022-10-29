@@ -25,6 +25,7 @@ public class PostQueryRepository {
                         post.user.picture))
                 .from(post)
                 .join(post.user, user)
+                .orderBy(post.postOrder.asc().nullsLast())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();

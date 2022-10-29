@@ -1,12 +1,10 @@
 package com.mydesk.api.post.repository;
 
+import com.mydesk.api.post.domain.DeskConcept;
 import com.mydesk.api.post.domain.Post;
 import com.mydesk.api.post.domain.PostContent;
 import com.mydesk.api.post.domain.PostRepository;
-import com.mydesk.api.user.domain.Role;
-import com.mydesk.api.user.domain.SnsChannel;
-import com.mydesk.api.user.domain.User;
-import com.mydesk.api.user.domain.UserRepository;
+import com.mydesk.api.user.domain.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,12 +36,43 @@ public class PostQueryRepositoryTest {
 
     @BeforeEach
     public void setup() {
-        User user1 = userRepository.save(new User("yhc", "hyunchul.yang@gmail.com", "testPicture", Role.USER, SnsChannel.GOOGLE));
+        User user1 = User.builder()
+                .name("양현철")
+                .nickname("yhc")
+                .email("hyunchul.yang@gmail.com")
+                .picture("testPicture")
+                .bloodType(BloodType.A)
+                .mbti(MBTI.INFJ)
+                .role(Role.USER)
+                .snsChannel(SnsChannel.GOOGLE)
+                        .build();
+        userRepository.save(user1);
+
         System.out.println("user1.getId() = " + user1.getId());
 
-        Post post1 = new Post(user1, "제목1", "pic1", 3L);
-        Post post2 = new Post(user1, "제목2", "pic2", 2L);
-        Post post3 = new Post(user1, "제목3", "pic3", 1L);
+        Post post1 = Post.builder()
+                .user(user1)
+                .spaceType("원룸")
+                .deskConcept(DeskConcept.CLASSIC)
+                .deskSummary("제 원룸책상입니다.")
+                .cost(10)
+                .postOrder(1L)
+                .build();
+        Post post2 = Post.builder()
+                .user(user1)
+                .spaceType("원룸2")
+                .deskConcept(DeskConcept.MODERN)
+                .deskSummary("제 원룸책상2입니다.")
+                .postOrder(2L)
+                .cost(20)
+                .build();
+        Post post3 = Post.builder()
+                .user(user1)
+                .spaceType("원룸3")
+                .deskConcept(DeskConcept.MODERN)
+                .deskSummary("제 원룸책상3입니다.")
+                .cost(20)
+                .build();
 
         PostContent deskItem1 = PostContent.deskPicture("deskPicture", 1);
         PostContent deskItem2 = PostContent.deskDescription("deskPicture", 2);
@@ -72,22 +101,23 @@ public class PostQueryRepositoryTest {
     public void sort_query() {
         List<Post> results = queryFactory
                 .selectFrom(post)
-                .orderBy(post.postOrder.asc())
+                .orderBy(post.postOrder.asc().nullsLast())
                 .fetch();
 
-        assertThat(results.get(0).getTitle()).isEqualTo("제목3");
+        assertThat(results.get(0).getSpaceType()).isEqualTo("원룸");
     }
 
     @Test
     public void paging_query() {
         List<Post> results = queryFactory
                 .selectFrom(post)
-                .orderBy(post.postOrder.asc())
+                .orderBy(post.postOrder.asc().nullsLast())
                 .offset(0)
                 .limit(10)
                 .fetch();
 
-        assertThat(results.get(0).getTitle()).isEqualTo("제목3");
+        assertThat(results.get(0).getSpaceType()).isEqualTo("원룸");
+        assertThat(results.get(2).getSpaceType()).isEqualTo("원룸3");
         assertThat(results.size()).isEqualTo(3);
     }
 
