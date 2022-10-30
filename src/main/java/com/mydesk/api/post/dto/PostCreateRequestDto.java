@@ -23,8 +23,8 @@ public class PostCreateRequestDto {
     private String email;
     @NotNull(message = "Gender cannot be null")
     private Gender gender;
-    @NotNull(message = "Age cannot be null")
-    private Age age;
+    @Min(value = 0, message = "Cost should greater than 0")
+    private int age;
     @NotNull(message = "BloodType cannot be null")
     private BloodType bloodType;
     @NotNull(message = "MBTI cannot be null")
@@ -38,7 +38,7 @@ public class PostCreateRequestDto {
     private DeskConcept deskConcept;
     @NotNull(message = "SpaceType cannot be null")
     private String spaceType;
-    @Min(value = 10, message = "Cost should greater than 10")
+    @Min(value = 0, message = "Cost should greater than 0")
     private int cost;
     @NotEmpty(message = "deskContent cannot be null")
     private List<DeskContentCreateDto> deskContents;
@@ -52,7 +52,7 @@ public class PostCreateRequestDto {
             String nickname,
             String email,
             Gender gender,
-            Age age,
+            int age,
             BloodType bloodType,
             MBTI mbti,
             String nationality,

@@ -2,7 +2,6 @@ package com.mydesk.api.post.controller;
 
 import com.mydesk.api.config.auth.dto.SessionUser;
 import com.mydesk.api.post.domain.PostRepository;
-import com.mydesk.api.user.domain.Role;
 import com.mydesk.api.user.domain.User;
 import com.mydesk.api.user.domain.UserRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -55,19 +54,21 @@ public class PostControllerTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         postRepository.deleteAll();
         userRepository.deleteAll();
     }
 
     private void setSessionUser() {
-        User user = userRepository.save(aUser().role(Role.USER).build());
+        User user = userRepository.save(aUser().build());
         session = new MockHttpSession();
         session.setAttribute("user", new SessionUser(user));
     }
 
     private void setAdminUser() {
-        User user = userRepository.save(aUser().role(Role.ADMIN).build());
+        User user = aUser().build();
+        user.toAdminRole();
+        userRepository.save(user);
         session = new MockHttpSession();
         session.setAttribute("user", new SessionUser(user));
     }

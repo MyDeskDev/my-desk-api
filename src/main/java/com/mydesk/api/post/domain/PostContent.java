@@ -37,6 +37,9 @@ public class PostContent extends BaseTimeEntity {
     @Column(nullable = false)
     private Boolean isFavorite = false;
 
+//    @Column(nullable = false)
+//    private Boolean isFavorite = false;
+
     @Column
     private int contentOrder;
 

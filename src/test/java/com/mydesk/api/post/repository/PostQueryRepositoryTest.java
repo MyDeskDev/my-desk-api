@@ -43,7 +43,6 @@ public class PostQueryRepositoryTest {
                 .picture("testPicture")
                 .bloodType(BloodType.A)
                 .mbti(MBTI.INFJ)
-                .role(Role.USER)
                 .snsChannel(SnsChannel.GOOGLE)
                         .build();
         userRepository.save(user1);
