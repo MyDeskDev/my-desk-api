@@ -15,7 +15,6 @@ public class Fixtures {
                 .name("yhc")
                 .email("hyunchul.yang@gmail.com")
                 .picture("pic")
-                .role(Role.USER)
                 .snsChannel(SnsChannel.GOOGLE);
     }
 

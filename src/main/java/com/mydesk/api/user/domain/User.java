@@ -30,9 +30,8 @@ public class User extends BaseTimeEntity {
     @Column
     private Gender gender;
 
-    @Enumerated(EnumType.STRING)
     @Column
-    private Age age;
+    private int age;
 
     @Column
     private String nationality;
@@ -50,7 +49,7 @@ public class User extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role role;
+    private Role role = Role.GUEST;
 
     @Enumerated(EnumType.STRING)
     @Column
@@ -61,12 +60,11 @@ public class User extends BaseTimeEntity {
                 String nickname,
                 String email,
                 Gender gender,
-                Age age,
+                int age,
                 String nationality,
                 BloodType bloodType,
                 MBTI mbti,
                 String picture,
-                Role role,
                 SnsChannel snsChannel)
     {
         this.name = name;
@@ -78,7 +76,6 @@ public class User extends BaseTimeEntity {
         this.bloodType = bloodType;
         this.mbti = mbti;
         this.picture = picture;
-        this.role = role;
         this.snsChannel = snsChannel;
     }
 
@@ -86,10 +83,19 @@ public class User extends BaseTimeEntity {
         return this.role.getKey();
     }
 
-    public User update(String name, String picture) {
+    public User update(String name, String picture, SnsChannel snsChannel) {
         this.name = name;
         this.picture = picture;
+        this.snsChannel = snsChannel;
 
         return this;
+    }
+
+    public void toUserRole() {
+        this.role = Role.USER;
+    }
+
+    public void toAdminRole() {
+        this.role = Role.ADMIN;
     }
 }

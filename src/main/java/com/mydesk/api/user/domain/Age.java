@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum Age {
 
+    // 삭제 후 int 타입으로
     TWENTIES("20대 이하"), // 20대 이하
     THIRTIES("30대"),
     FORTIES("40대"),
