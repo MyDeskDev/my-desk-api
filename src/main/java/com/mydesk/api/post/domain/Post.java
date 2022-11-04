@@ -23,17 +23,17 @@ public class Post extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name="space_type")
     private String spaceType;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = false, name="desk_concept")
     private DeskConcept deskConcept;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name="desk_summary")
     private String deskSummary;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name="cost")
     private int cost;
 
     @Column(nullable = false)
@@ -41,10 +41,10 @@ public class Post extends BaseTimeEntity {
     private List<PostContent> postContents = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = false, name="status")
     private PostStatus status;
 
-    @Column
+    @Column(name="post_order")
     private Long postOrder;
 
     public void setUser(User user) {

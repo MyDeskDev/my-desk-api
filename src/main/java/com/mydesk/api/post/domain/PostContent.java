@@ -22,25 +22,25 @@ public class PostContent extends BaseTimeEntity {
     private Post post;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = false, name="content_type")
     private ContentType contentType;
 
-    @Column
+    @Column(name="name")
     private String name;
 
-    @Column
+    @Column(name="picture")
     private String picture;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT", name="content")
     private String content;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name="is_favorite")
     private Boolean isFavorite = false;
 
-//    @Column(nullable = false)
-//    private Boolean isFavorite = false;
+    @Column(nullable = false, name="is_recommended")
+    private Boolean isRecommended = false;
 
-    @Column
+    @Column(name="content_order")
     private int contentOrder;
 
     public static PostContent deskDescription(String content, int contentOrder) {

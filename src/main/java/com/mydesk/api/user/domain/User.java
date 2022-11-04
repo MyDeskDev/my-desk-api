@@ -17,42 +17,42 @@ public class User extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name="name")
     private String name;
 
-    @Column
+    @Column(name="nickname")
     private String nickname;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name="email")
     private String email;
 
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name="gender")
     private Gender gender;
 
-    @Column
+    @Column(name="age")
     private int age;
 
-    @Column
+    @Column(name="nationality")
     private String nationality;
 
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name="blood_type")
     private BloodType bloodType;
 
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name="mbti")
     private MBTI mbti;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name="picture")
     private String picture;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = false, name="role")
     private Role role = Role.GUEST;
 
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(name="sns_channel")
     private SnsChannel snsChannel;
 
     @Builder
