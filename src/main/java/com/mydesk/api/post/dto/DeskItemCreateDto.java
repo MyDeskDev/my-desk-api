@@ -13,17 +13,32 @@ public class DeskItemCreateDto {
     private String picture;
     @NotNull
     private String content;
-    @NotNull
+
+    private String purchaseLink;
+
+    @NotNull(message = "isFavorite cannot be null")
     private Boolean isFavorite;
 
-    public DeskItemCreateDto(String name, String picture, String content, Boolean isFavorite) {
+    @NotNull(message = "isRecommended cannot be null")
+    private Boolean isRecommended;
+
+    public DeskItemCreateDto(
+            String name,
+            String picture,
+            String content,
+            String purchaseLink,
+            Boolean isFavorite,
+            Boolean isRecommended
+    ) {
         this.name = name;
         this.picture = picture;
         this.content = content;
+        this.purchaseLink = purchaseLink;
         this.isFavorite = isFavorite;
+        this.isRecommended = isRecommended;
     }
 
     public PostContent toEntity(int contentOrder) {
-        return PostContent.deskItem(name, picture, content, isFavorite, contentOrder);
+        return PostContent.deskItem(name, picture, content, purchaseLink, isFavorite, isRecommended, contentOrder);
     }
 }

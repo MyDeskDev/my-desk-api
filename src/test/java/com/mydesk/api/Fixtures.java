@@ -23,7 +23,7 @@ public class Fixtures {
     }
 
     public static PostContent aDeskItem() {
-        return PostContent.deskItem("itemName", "itemPicture", "itemContent", true, 2);
+        return PostContent.deskItem("itemName", "itemPicture", "itemContent", "www.naver.com", true, false, 2);
     }
 
     public static PostBuilder aPost() {

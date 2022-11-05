@@ -34,34 +34,55 @@ public class PostContent extends BaseTimeEntity {
     @Column(columnDefinition = "TEXT", name="content")
     private String content;
 
-    @Column(nullable = false, name="is_favorite")
-    private Boolean isFavorite = false;
+    @Column(name="purchase_link")
+    private String purchaseLink;
 
-    @Column(nullable = false, name="is_recommended")
-    private Boolean isRecommended = false;
+    @Column(name="is_favorite")
+    private Boolean isFavorite;
+
+    @Column(name="is_recommended")
+    private Boolean isRecommended;
 
     @Column(name="content_order")
     private int contentOrder;
 
     public static PostContent deskDescription(String content, int contentOrder) {
-        return new PostContent(ContentType.deskDescription, null, null, content, null, contentOrder);
+        return new PostContent(ContentType.deskDescription, null, null, content, null, null, null, contentOrder);
     }
 
     public static PostContent deskPicture(String picture, int contentOrder) {
-        return new PostContent(ContentType.deskPicture, null, picture, null, null, contentOrder);
+        return new PostContent(ContentType.deskPicture, null, picture, null, null, null, null, contentOrder);
     }
 
-    public static PostContent deskItem(String name, String picture, String content, Boolean isFavorite, int contentOrder) {
-        return new PostContent(ContentType.item, name, picture, content, isFavorite, contentOrder);
+    public static PostContent deskItem(
+            String name,
+            String picture,
+            String content,
+            String purchaseLink,
+            Boolean isFavorite,
+            Boolean isRecommended,
+            int contentOrder
+    ) {
+        return new PostContent(ContentType.item, name, picture, content, purchaseLink, isFavorite, isRecommended, contentOrder);
     }
 
-    private PostContent(ContentType contentType, String name, String picture, String content,
-                        Boolean isFavorite, int contentOrder) {
+    private PostContent(
+            ContentType contentType,
+            String name,
+            String picture,
+            String content,
+            String purchaseLink,
+            Boolean isFavorite,
+            Boolean isRecommended,
+            int contentOrder
+    ) {
         this.contentType = contentType;
         this.name = name;
         this.picture = picture;
         this.content = content;
+        this.purchaseLink = purchaseLink;
         this.isFavorite = isFavorite;
+        this.isRecommended = isRecommended;
         this.contentOrder = contentOrder;
     }
 

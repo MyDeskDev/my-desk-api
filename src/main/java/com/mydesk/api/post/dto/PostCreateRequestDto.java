@@ -6,6 +6,7 @@ import com.mydesk.api.user.domain.*;
 import lombok.Builder;
 import lombok.Getter;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -15,36 +16,50 @@ import java.util.List;
 public class PostCreateRequestDto {
     @NotEmpty(message = "profileImgUrl cannot be null")
     private String profileImage;
+
     @NotEmpty(message = "Name cannot be null")
     private String name;
+
     @NotEmpty(message = "Nickname cannot be null")
     private String nickname;
+
     @NotEmpty(message = "Email cannot be null")
     private String email;
+
     @NotNull(message = "Gender cannot be null")
     private Gender gender;
+
     @Min(value = 0, message = "Cost should greater than 0")
     private int age;
-    @NotNull(message = "BloodType cannot be null")
+
     private BloodType bloodType;
-    @NotNull(message = "MBTI cannot be null")
+
     private MBTI mbti;
+
     @NotEmpty(message = "countryCode cannot be null")
     private String countryCode;
+
     @NotEmpty(message = "Job cannot be null")
     private String job;
 
+
     @NotNull(message = "DeskSummary cannot be null")
     private String deskSummary;
+
     @NotNull(message = "deskConcept cannot be null")
     private DeskConcept deskConcept;
+
     @NotNull(message = "SpaceType cannot be null")
     private String spaceType;
+
     @Min(value = 0, message = "Cost should greater than 0")
     private int cost;
+
+    @Valid
     @NotEmpty(message = "deskContent cannot be null")
     private List<DeskContentCreateDto> deskContents;
-    @NotEmpty(message = "deskItem cannot be null")
+
+    @Valid
     private List<DeskItemCreateDto> deskItems;
 
     @Builder
@@ -100,9 +115,11 @@ public class PostCreateRequestDto {
             ++postOrder;
         }
 
-        for (DeskItemCreateDto dto: deskItems) {
-            post.addPostContent(dto.toEntity(postOrder));
-            ++postOrder;
+        if (!deskItems.isEmpty()) {
+            for (DeskItemCreateDto dto: deskItems) {
+                post.addPostContent(dto.toEntity(postOrder));
+                ++postOrder;
+            }
         }
 
         return post;
