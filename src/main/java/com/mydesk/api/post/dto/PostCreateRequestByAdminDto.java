@@ -2,14 +2,13 @@ package com.mydesk.api.post.dto;
 
 import com.mydesk.api.post.domain.DeskConcept;
 import com.mydesk.api.post.domain.Post;
-import com.mydesk.api.post.domain.PostContent;
-import com.mydesk.api.user.domain.Age;
 import com.mydesk.api.user.domain.BloodType;
 import com.mydesk.api.user.domain.Gender;
 import com.mydesk.api.user.domain.MBTI;
 import lombok.Builder;
 import lombok.Getter;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -26,8 +25,8 @@ public class PostCreateRequestByAdminDto {
     private String email;
     @NotNull(message = "Gender cannot be null")
     private Gender gender;
-    @NotNull(message = "Age cannot be null")
-    private Age age;
+    @Min(value = 0, message = "Age should greater than 0")
+    private int age;
     @NotNull(message = "BloodType cannot be null")
     private BloodType bloodType;
     @NotNull(message = "MBTI cannot be null")
@@ -53,7 +52,7 @@ public class PostCreateRequestByAdminDto {
             String nickname,
             String email,
             Gender gender,
-            Age age,
+            int age,
             BloodType bloodType,
             MBTI mbti,
             String nationality,

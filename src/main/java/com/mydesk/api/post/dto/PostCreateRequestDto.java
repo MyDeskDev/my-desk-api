@@ -29,8 +29,10 @@ public class PostCreateRequestDto {
     private BloodType bloodType;
     @NotNull(message = "MBTI cannot be null")
     private MBTI mbti;
-    @NotEmpty(message = "Nationality cannot be null")
-    private String nationality;
+    @NotEmpty(message = "countryCode cannot be null")
+    private String countryCode;
+    @NotEmpty(message = "Job cannot be null")
+    private String job;
 
     @NotNull(message = "DeskSummary cannot be null")
     private String deskSummary;
@@ -55,7 +57,8 @@ public class PostCreateRequestDto {
             int age,
             BloodType bloodType,
             MBTI mbti,
-            String nationality,
+            String countryCode,
+            String job,
 
             String deskSummary,
             DeskConcept deskConcept,
@@ -72,7 +75,8 @@ public class PostCreateRequestDto {
         this.age = age;
         this.bloodType = bloodType;
         this.mbti = mbti;
-        this.nationality = nationality;
+        this.countryCode = countryCode;
+        this.job = job;
 
         this.deskSummary = deskSummary;
         this.deskConcept = deskConcept;
@@ -114,7 +118,8 @@ public class PostCreateRequestDto {
                 .age(age)
                 .bloodType(bloodType)
                 .mbti(mbti)
-                .nationality(nationality)
+                .countryCode(countryCode)
+                .job(job)
                 .build();
     }
 }

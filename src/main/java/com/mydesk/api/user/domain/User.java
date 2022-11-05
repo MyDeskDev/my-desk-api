@@ -33,8 +33,11 @@ public class User extends BaseTimeEntity {
     @Column(name="age")
     private int age;
 
-    @Column(name="nationality")
-    private String nationality;
+    @Column(name="country_code")
+    private String countryCode;
+
+    @Column(name="job")
+    private String job;
 
     @Enumerated(EnumType.STRING)
     @Column(name="blood_type")
@@ -61,7 +64,8 @@ public class User extends BaseTimeEntity {
                 String email,
                 Gender gender,
                 int age,
-                String nationality,
+                String countryCode,
+                String job,
                 BloodType bloodType,
                 MBTI mbti,
                 String picture,
@@ -72,7 +76,8 @@ public class User extends BaseTimeEntity {
         this.email = email;
         this.gender = gender;
         this.age = age;
-        this.nationality = nationality;
+        this.countryCode = countryCode;
+        this.job = job;
         this.bloodType = bloodType;
         this.mbti = mbti;
         this.picture = picture;

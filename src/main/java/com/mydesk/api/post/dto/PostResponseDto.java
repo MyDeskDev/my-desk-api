@@ -22,7 +22,8 @@ public class PostResponseDto {
     private Gender gender;
     private int age;
     private BloodType bloodType;
-    private String nationality;
+    private String countryCode;
+    private String job;
 
     private Long id;
     private String deskSummary;
@@ -41,7 +42,8 @@ public class PostResponseDto {
         this.gender = user.getGender();
         this.age = user.getAge();
         this.bloodType = user.getBloodType();
-        this.nationality = user.getNationality();
+        this.countryCode = user.getCountryCode();
+        this.job = user.getJob();
 
         this.id = entity.getId();
         this.deskSummary = entity.getDeskSummary();
