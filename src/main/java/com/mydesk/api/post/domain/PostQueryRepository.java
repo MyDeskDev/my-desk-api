@@ -21,6 +21,7 @@ public class PostQueryRepository {
         return queryFactory
                 .select(Projections.constructor(PostListResponseDto.class,
                         post.id,
+                        post.thumbnailImgUrl,
                         post.deskSummary,
                         post.user.id,
                         post.user.profileImgUrl))
