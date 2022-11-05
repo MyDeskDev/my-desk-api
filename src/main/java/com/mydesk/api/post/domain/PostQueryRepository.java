@@ -23,7 +23,7 @@ public class PostQueryRepository {
                         post.id,
                         post.deskSummary,
                         post.user.id,
-                        post.user.picture))
+                        post.user.profileImgUrl))
                 .from(post)
                 .join(post.user, user)
                 .orderBy(post.postOrder.asc().nullsLast())

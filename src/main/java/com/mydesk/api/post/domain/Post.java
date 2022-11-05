@@ -23,6 +23,9 @@ public class Post extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(nullable = false, name="thumbnail_img_url")
+    private String thumbnailImgUrl;
+
     @Column(nullable = false, name="space_type")
     private String spaceType;
 
@@ -52,8 +55,9 @@ public class Post extends BaseTimeEntity {
     }
 
     @Builder
-    public Post(User user, String spaceType, DeskConcept deskConcept, String deskSummary, int cost, Long postOrder){
+    public Post(User user, String thumbnailImgUrl, String spaceType, DeskConcept deskConcept, String deskSummary, int cost, Long postOrder){
         this.user = user;
+        this.thumbnailImgUrl = thumbnailImgUrl;
         this.spaceType = spaceType;
         this.deskConcept = deskConcept;
         this.deskSummary = deskSummary;

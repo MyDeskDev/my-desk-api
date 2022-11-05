@@ -40,17 +40,16 @@ public class PostQueryRepositoryTest {
                 .name("양현철")
                 .nickname("yhc")
                 .email("hyunchul.yang@gmail.com")
-                .picture("testPicture")
+                .profileImgUrl("testProfileImgUrl")
                 .bloodType(BloodType.A)
                 .mbti(MBTI.INFJ)
                 .snsChannel(SnsChannel.GOOGLE)
                         .build();
         userRepository.save(user1);
 
-        System.out.println("user1.getId() = " + user1.getId());
-
         Post post1 = Post.builder()
                 .user(user1)
+                .thumbnailImgUrl("thumbnailImgUrl1")
                 .spaceType("원룸")
                 .deskConcept(DeskConcept.CLASSIC)
                 .deskSummary("제 원룸책상입니다.")
@@ -59,6 +58,7 @@ public class PostQueryRepositoryTest {
                 .build();
         Post post2 = Post.builder()
                 .user(user1)
+                .thumbnailImgUrl("thumbnailImgUrl2")
                 .spaceType("원룸2")
                 .deskConcept(DeskConcept.MODERN)
                 .deskSummary("제 원룸책상2입니다.")
@@ -67,6 +67,7 @@ public class PostQueryRepositoryTest {
                 .build();
         Post post3 = Post.builder()
                 .user(user1)
+                .thumbnailImgUrl("thumbnailImgUrl3")
                 .spaceType("원룸3")
                 .deskConcept(DeskConcept.MODERN)
                 .deskSummary("제 원룸책상3입니다.")

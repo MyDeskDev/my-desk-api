@@ -1,5 +1,6 @@
 package com.mydesk.api.post.dto;
 
+import com.mydesk.api.post.domain.ContentType;
 import com.mydesk.api.post.domain.DeskConcept;
 import com.mydesk.api.post.domain.Post;
 import com.mydesk.api.user.domain.*;
@@ -15,7 +16,7 @@ import java.util.List;
 @Getter
 public class PostCreateRequestDto {
     @NotEmpty(message = "profileImgUrl cannot be null")
-    private String profileImage;
+    private String profileImgUrl;
 
     @NotEmpty(message = "Name cannot be null")
     private String name;
@@ -43,6 +44,8 @@ public class PostCreateRequestDto {
     private String job;
 
 
+    private String thumbnailImgUrl;
+
     @NotNull(message = "DeskSummary cannot be null")
     private String deskSummary;
 
@@ -64,7 +67,7 @@ public class PostCreateRequestDto {
 
     @Builder
     public PostCreateRequestDto(
-            String profileImage,
+            String profileImgUrl,
             String name,
             String nickname,
             String email,
@@ -75,6 +78,7 @@ public class PostCreateRequestDto {
             String countryCode,
             String job,
 
+            String thumbnailImgUrl,
             String deskSummary,
             DeskConcept deskConcept,
             String spaceType,
@@ -82,7 +86,7 @@ public class PostCreateRequestDto {
             List<DeskContentCreateDto> deskContents,
             List<DeskItemCreateDto> deskItems
     ) {
-        this.profileImage = profileImage;
+        this.profileImgUrl = profileImgUrl;
         this.name = name;
         this.nickname = nickname;
         this.email = email;
@@ -93,6 +97,7 @@ public class PostCreateRequestDto {
         this.countryCode = countryCode;
         this.job = job;
 
+        this.thumbnailImgUrl = thumbnailImgUrl;
         this.deskSummary = deskSummary;
         this.deskConcept = deskConcept;
         this.spaceType = spaceType;
@@ -102,7 +107,16 @@ public class PostCreateRequestDto {
     }
 
     public Post getPost() {
+        // 첫번째 책상 사진이 썸네일로
+        for (DeskContentCreateDto dto: deskContents) {
+            if (dto.getType().equals(ContentType.deskPicture)) {
+                thumbnailImgUrl = dto.getValue();
+                break;
+            }
+        }
+
         Post post = Post.builder()
+                .thumbnailImgUrl(thumbnailImgUrl)
                 .deskSummary(deskSummary)
                 .deskConcept(deskConcept)
                 .spaceType(spaceType)
@@ -128,7 +142,7 @@ public class PostCreateRequestDto {
     public User getUser() {
         return User.builder()
                 .name(name)
-                .picture(profileImage)
+                .profileImgUrl(profileImgUrl)
                 .nickname(nickname)
                 .email(email)
                 .gender(gender)

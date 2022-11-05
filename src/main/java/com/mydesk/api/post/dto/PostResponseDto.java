@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Getter
 public class PostResponseDto {
     private Long userId;
-    private String profileImage;
+    private String profileImgUrl;
     private String nickname;
     private MBTI mbti;
     private Gender gender;
@@ -26,6 +26,7 @@ public class PostResponseDto {
     private String job;
 
     private Long id;
+    private String thumbnailImgUrl;
     private String deskSummary;
     private String spaceType;
     private DeskConcept deskConcept;
@@ -36,7 +37,7 @@ public class PostResponseDto {
     public PostResponseDto(Post entity) {
         User user = entity.getUser();
         this.userId = user.getId();
-        this.profileImage = user.getPicture();
+        this.profileImgUrl = user.getProfileImgUrl();
         this.nickname = user.getNickname();
         this.mbti =  user.getMbti();
         this.gender = user.getGender();
@@ -46,6 +47,7 @@ public class PostResponseDto {
         this.job = user.getJob();
 
         this.id = entity.getId();
+        this.thumbnailImgUrl = entity.getThumbnailImgUrl();
         this.deskSummary = entity.getDeskSummary();
         this.spaceType = entity.getSpaceType();
         this.deskConcept = entity.getDeskConcept();

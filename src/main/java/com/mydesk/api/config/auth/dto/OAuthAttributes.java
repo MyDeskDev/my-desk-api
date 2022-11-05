@@ -14,17 +14,17 @@ public class OAuthAttributes {
     private String nameAttributeKey;
     private String name;
     private String email;
-    private String picture;
+    private String profileImgUrl;
     private SnsChannel snsChannel;
 
     @Builder
     public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String name,
-                           String email, String picture, SnsChannel snsChannel) {
+                           String email, String profileImgUrl, SnsChannel snsChannel) {
         this.attributes = attributes;
         this.nameAttributeKey = nameAttributeKey;
         this.name = name;
         this.email = email;
-        this.picture = picture;
+        this.profileImgUrl = profileImgUrl;
         this.snsChannel = snsChannel;
     }
 
@@ -43,7 +43,7 @@ public class OAuthAttributes {
         return OAuthAttributes.builder()
                 .name((String) attributes.get("name"))
                 .email((String) attributes.get("email"))
-                .picture((String) attributes.get("picture"))
+                .profileImgUrl((String) attributes.get("picture"))
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
                 .snsChannel(SnsChannel.GOOGLE)
@@ -55,7 +55,7 @@ public class OAuthAttributes {
         return OAuthAttributes.builder()
                 .name((String) response.get("name"))
                 .email((String) response.get("email"))
-                .picture((String) response.get("profile_image"))
+                .profileImgUrl((String) response.get("profile_image"))
                 .attributes(response)
                 .nameAttributeKey(userNameAttributeName)
                 .snsChannel(SnsChannel.NAVER)
@@ -68,7 +68,7 @@ public class OAuthAttributes {
         return OAuthAttributes.builder()
                 .email((String) accountAttributes.get("email"))
                 .name((String) profileAttributes.get("nickname"))
-                .picture((String) profileAttributes.get("profile_image_url"))
+                .profileImgUrl((String) profileAttributes.get("profile_image_url"))
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
                 .snsChannel(SnsChannel.KAKAO)
@@ -79,7 +79,7 @@ public class OAuthAttributes {
         return User.builder()
                 .name(name)
                 .email(email)
-                .picture(picture)
+                .profileImgUrl(profileImgUrl)
                 .snsChannel(snsChannel)
                 .build();
     }

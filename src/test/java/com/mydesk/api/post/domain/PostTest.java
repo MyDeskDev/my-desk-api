@@ -70,7 +70,7 @@ public class PostTest {
         // when
         List<Post> posts = postRepository.findAll();
         Post resultPost = posts.get(0);
-
+        System.out.println("resultPost.getThumbnailImgUrl() = " + resultPost.getThumbnailImgUrl());
         // then
         assertThat(resultPost.getStatus()).isEqualTo(PostStatus.CONFIRMING);
     }

@@ -9,20 +9,20 @@ import javax.validation.constraints.NotNull;
 @Getter
 public class DeskContentCreateDto {
     @NotNull
-    private String type;
+    private ContentType type;
     @NotNull
     private String value;
 
-    public DeskContentCreateDto(String type, String value) {
+    public DeskContentCreateDto(ContentType type, String value) {
         this.type = type;
         this.value = value;
     }
 
     public PostContent toEntity(int contentOrder) {
-        if (this.type.equals(ContentType.deskDescription.getKey())) {
+        if (type.equals(ContentType.deskDescription)) {
             return PostContent.deskDescription(value, contentOrder);
         }
-        if (this.type.equals(ContentType.deskPicture.getKey())) {
+        if (type.equals(ContentType.deskPicture)) {
             return PostContent.deskPicture(value, contentOrder);
         }
         throw new IllegalArgumentException("잘못된 타입입니다.");

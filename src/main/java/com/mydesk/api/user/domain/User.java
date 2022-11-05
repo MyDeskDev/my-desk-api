@@ -47,8 +47,8 @@ public class User extends BaseTimeEntity {
     @Column(name="mbti")
     private MBTI mbti;
 
-    @Column(nullable = false, name="picture")
-    private String picture;
+    @Column(nullable = false, name="profile_img_url")
+    private String profileImgUrl;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, name="role")
@@ -68,7 +68,7 @@ public class User extends BaseTimeEntity {
                 String job,
                 BloodType bloodType,
                 MBTI mbti,
-                String picture,
+                String profileImgUrl,
                 SnsChannel snsChannel)
     {
         this.name = name;
@@ -80,7 +80,7 @@ public class User extends BaseTimeEntity {
         this.job = job;
         this.bloodType = bloodType;
         this.mbti = mbti;
-        this.picture = picture;
+        this.profileImgUrl = profileImgUrl;
         this.snsChannel = snsChannel;
     }
 
@@ -88,9 +88,9 @@ public class User extends BaseTimeEntity {
         return this.role.getKey();
     }
 
-    public User update(String name, String picture, SnsChannel snsChannel) {
+    public User update(String name, String profileImgUrl, SnsChannel snsChannel) {
         this.name = name;
-        this.picture = picture;
+        this.profileImgUrl = profileImgUrl;
         this.snsChannel = snsChannel;
 
         return this;
