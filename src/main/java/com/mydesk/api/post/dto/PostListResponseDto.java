@@ -7,13 +7,13 @@ public class PostListResponseDto {
     private String thumbnailImgUrl;
     private String deskSummary;
     private Long userId;
-    private String userPicture;
+    private String profileImgUrl;
 
-    public PostListResponseDto(Long id, String thumbnailImgUrl, String deskSummary, Long userId, String userPicture) {
+    public PostListResponseDto(Long id, String thumbnailImgUrl, String deskSummary, Long userId, String profileImgUrl) {
         this.id = id;
         this.thumbnailImgUrl = thumbnailImgUrl;
         this.deskSummary = deskSummary;
         this.userId = userId;
-        this.userPicture = userPicture;
+        this.profileImgUrl = profileImgUrl;
     }
 }
