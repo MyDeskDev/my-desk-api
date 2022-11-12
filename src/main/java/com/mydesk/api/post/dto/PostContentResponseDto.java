@@ -5,6 +5,7 @@ import lombok.Getter;
 
 @Getter
 public class PostContentResponseDto {
+    private Long id;
     private String name;
     private String picture;
     private String content;
@@ -13,8 +14,29 @@ public class PostContentResponseDto {
     private Boolean isRecommended;
     private int contentOrder;
 
+    private PostContentResponseDto(
+            Long id,
+            String name,
+            String picture,
+            String content,
+            String purchaseLink,
+            Boolean isFavorite,
+            Boolean isRecommended,
+            int contentOrder
+    ) {
+        this.id = id;
+        this.name = name;
+        this.picture = picture;
+        this.content = content;
+        this.purchaseLink = purchaseLink;
+        this.isFavorite = isFavorite;
+        this.isRecommended = isRecommended;
+        this.contentOrder = contentOrder;
+    }
+
     public static PostContentResponseDto deskContentResponseDto(PostContent entity) {
         return new PostContentResponseDto(
+                entity.getId(),
                 null,
                 entity.getPicture(),
                 entity.getContent(),
@@ -27,6 +49,7 @@ public class PostContentResponseDto {
 
     public static PostContentResponseDto deskItemResponseDto(PostContent entity) {
         return new PostContentResponseDto(
+                entity.getId(),
                 entity.getName(),
                 entity.getPicture(),
                 entity.getContent(),
@@ -35,23 +58,5 @@ public class PostContentResponseDto {
                 entity.getIsRecommended(),
                 entity.getContentOrder()
         );
-    }
-
-    private PostContentResponseDto(
-            String name,
-            String picture,
-            String content,
-            String purchaseLink,
-            Boolean isFavorite,
-            Boolean isRecommended,
-            int contentOrder
-    ) {
-        this.name = name;
-        this.picture = picture;
-        this.content = content;
-        this.purchaseLink = purchaseLink;
-        this.isFavorite = isFavorite;
-        this.isRecommended = isRecommended;
-        this.contentOrder = contentOrder;
     }
 }
