@@ -15,7 +15,7 @@ public class AwsController {
 
     private final AwsS3Service awsS3Service;
 
-    @PostMapping("/upload")
+    @PostMapping("/api/upload")
     public String uploadImg(@RequestPart(value = "file") MultipartFile file) {
         return awsS3Service.uploadImg(file);
     }

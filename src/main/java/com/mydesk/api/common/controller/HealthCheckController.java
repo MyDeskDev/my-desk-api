@@ -14,12 +14,12 @@ public class HealthCheckController {
 
     private final Environment env;
 
-    @GetMapping("/ping")
+    @GetMapping("/api/ping")
     public String health() {
         return "pong";
     }
 
-    @GetMapping("/profile")
+    @GetMapping("/api/profile")
     public String profile() {
         List<String> activeProfiles  = Arrays.asList(env.getActiveProfiles());
         List<String> realProfiles = Arrays.asList("real1", "real2");
