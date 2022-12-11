@@ -16,6 +16,6 @@ public class TestController {
 
     @GetMapping("/api/v1/test")
     private String userTest() {
-        return "test";
+        return "test1";
     }
 }
