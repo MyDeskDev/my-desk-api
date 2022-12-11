@@ -19,15 +19,15 @@ public class HealthCheckController {
         return "pong";
     }
 
-    @GetMapping("/api/profile")
-    public String profile() {
-        List<String> activeProfiles  = Arrays.asList(env.getActiveProfiles());
-        List<String> realProfiles = Arrays.asList("real1", "real2");
-        String defaultProfile = activeProfiles.isEmpty() ? "default" : activeProfiles.get(0);
-
-        return activeProfiles.stream()
-                .filter(realProfiles::contains)
-                .findAny()
-                .orElse(defaultProfile);
-    }
+//    @GetMapping("/api/profile")
+//    public String profile() {
+//        List<String> activeProfiles  = Arrays.asList(env.getActiveProfiles());
+//        List<String> realProfiles = Arrays.asList("real1", "real2");
+//        String defaultProfile = activeProfiles.isEmpty() ? "default" : activeProfiles.get(0);
+//
+//        return activeProfiles.stream()
+//                .filter(realProfiles::contains)
+//                .findAny()
+//                .orElse(defaultProfile);
+//    }
 }
