@@ -2,7 +2,7 @@
 <Configuration status="INFO">
     <!--    해당 설정파일에서 사용하는 프로퍼티-->
     <Properties>
-        <Property name="logNm">Spring Log4j2 Test</Property>
+        <Property name="logNm">mydesk_api</Property>
         <Property name="layoutPattern">%style{%d{yyyy/MM/dd HH:mm:ss,SSS}}{cyan} %highlight{[%-5p]}{FATAL=bg_red, ERROR=red,
             INFO=green, DEBUG=blue}  [%C] %style{[%t]}{yellow}- %m%n -</Property>
     </Properties>
