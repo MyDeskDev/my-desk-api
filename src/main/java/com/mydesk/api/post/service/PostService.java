@@ -48,7 +48,12 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public List<PostListResponseDto> getPostList(PageRequest pageRequest) {
-        return postQueryRepository.getPostList(pageRequest.of());
+        return postQueryRepository.getPosts(pageRequest.of());
+    }
+
+    @Transactional(readOnly = true)
+    public List<PostListResponseDto> getConfirmedPostList(PageRequest pageRequest) {
+        return postQueryRepository.getPostsByStatus(PostStatus.CONFIRMED, pageRequest.of());
     }
 
 

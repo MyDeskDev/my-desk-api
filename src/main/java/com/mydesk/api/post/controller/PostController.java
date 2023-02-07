@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -21,14 +20,8 @@ public class PostController {
 
     private final PostService postService;
 
-    // TODO: json 파일을 내려주는걸로 할지
-    @GetMapping("/api/v1/types")
-    public Map<String, List<String>> getTypes() {
-        return TypeResponseDto.getTypes();
-    }
-
     @GetMapping("/api/v1/posts")
-    public List<PostListResponseDto> getPostList(PageRequest pageRequest) {
+    public List<PostListResponseDto> getPosts(PageRequest pageRequest) {
         return postService.getPostList(pageRequest);
     }
 
