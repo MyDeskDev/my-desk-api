@@ -42,3 +42,6 @@ application-aws.properties
 
 # log file
 logs/
+
+# DS STORE
+.DS_Store
