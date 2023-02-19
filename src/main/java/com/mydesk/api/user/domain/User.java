@@ -17,7 +17,7 @@ public class User extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, name="name")
+    @Column(name="name")
     private String name;
 
     @Column(name="nickname")
@@ -47,7 +47,7 @@ public class User extends BaseTimeEntity {
     @Column(name="mbti")
     private MBTI mbti;
 
-    @Column(nullable = false, name="profile_img_url")
+    @Column(name="profile_img_url")
     private String profileImgUrl;
 
     @Enumerated(EnumType.STRING)

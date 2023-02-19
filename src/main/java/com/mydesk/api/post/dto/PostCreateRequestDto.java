@@ -15,10 +15,8 @@ import java.util.List;
 
 @Getter
 public class PostCreateRequestDto {
-    @NotEmpty(message = "profileImgUrl cannot be null")
     private String profileImgUrl;
 
-    @NotEmpty(message = "Name cannot be null")
     private String name;
 
     @NotEmpty(message = "Nickname cannot be null")
