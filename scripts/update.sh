@@ -1,6 +1,6 @@
 JAR_FILE=$(ls -tr *.jar | tail -n 1)
 date=$(date '+%Y%m%d%H%M%S')
-IMAGE_NAME=$JAR_FILE$date
+IMAGE_NAME=mydesk-api:$date
 
 echo "> 새로운 이미지($IMAGE_NAME)  빌드"
 docker build --build-arg JAR_FILE="$JAR_FILE" -t $IMAGE_NAME .
