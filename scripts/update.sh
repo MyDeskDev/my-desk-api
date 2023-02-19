@@ -1,16 +1,18 @@
-echo "> 새로운 이미지 빌드"
 JAR_FILE=$(ls -tr *.jar | tail -n 1)
 date=$(date '+%Y%m%d%H%M%S')
-docker build --build-arg JAR_FILE="$JAR_FILE" -t mydesk-api:"$date" .
+IMAGE_NAME=$JAR_FILE$date
+
+echo "> 새로운 이미지($IMAGE_NAME)  빌드"
+docker build --build-arg JAR_FILE="$JAR_FILE" -t $IMAGE_NAME .
 
 echo "> 기존 container 찾기"
-CONTAINER_ID=$(docker ps | awk '{ if ($2 == "mydesk-api") print ($1)}')
+CONTAINER_ID=$(docker ps | grep mydesk-api | awk '{ print $1 }')
 
 echo "> stop & remove"
-docker stop $CONTAINER_ID && docker rm $CONTAINER_ID
+docker stop $CONTAINER_ID && docker rm $CONT정AINER_ID
 
 echo "> 새로운 container 띄우기"
-NEW_CONTAINER_ID=$(docker container run -d -p 8080:8080 mydesk-api:$date)
+NEW_CONTAINER_ID=$(docker container run -d -p 8080:8080 --name=mydesk $IMAGE_NAME)
 
 echo "> 성공적으로 띄워졌는지 확인"
 sleep 5
