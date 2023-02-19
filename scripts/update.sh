@@ -12,7 +12,7 @@ echo "> stop & remove"
 docker stop $CONTAINER_ID && docker rm $CONTAINER_ID
 
 echo "> 새로운 container 띄우기"
-NEW_CONTAINER_ID=$(docker container run -d -p 8080:8080 --name=mydesk $IMAGE_NAME)
+NEW_CONTAINER_ID=$(docker container run -d -p 8080:8080 --name=mydesk-api $IMAGE_NAME)
 
 echo "> 성공적으로 띄워졌는지 확인"
 sleep 5
