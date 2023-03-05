@@ -5,6 +5,7 @@ import com.mydesk.api.config.auth.dto.SessionUser;
 import com.mydesk.api.generic.PageRequest;
 import com.mydesk.api.post.dto.*;
 import com.mydesk.api.post.service.PostService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+@Api
 @RequiredArgsConstructor
 @RestController
 public class PostController {

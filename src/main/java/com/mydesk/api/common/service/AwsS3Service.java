@@ -5,7 +5,6 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +25,7 @@ public class AwsS3Service {
         String fileName = file.getOriginalFilename();
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentType(file.getContentType());
+        objectMetadata.setContentLength(file.getSize());
 
         try (InputStream inputStream = file.getInputStream()) {
             s3Client.putObject(new PutObjectRequest(bucketName, fileName, inputStream, objectMetadata)
