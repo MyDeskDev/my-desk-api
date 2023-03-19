@@ -12,10 +12,7 @@ import com.mydesk.api.post.domain.Post.PostBuilder;
 public class Fixtures {
     public static UserBuilder aUser() {
         return User.builder()
-                .name("yhc")
-                .email("hyunchul.yang@gmail.com")
-                .profileImgUrl("profileImgUrl")
-                .snsChannel(SnsChannel.GOOGLE);
+                .email("hyunchul.yang@gmail.com");
     }
 
     public static PostContent aDeskContent() {
@@ -27,8 +24,11 @@ public class Fixtures {
     }
 
     public static PostBuilder aPost() {
+        return Post.builder();
+    }
+
+    public static PostBuilder CompletedPost() {
         return Post.builder()
-                .thumbnailImgUrl("PostthumbnailImgUrl")
                 .spaceType("원룸3")
                 .deskConcept(DeskConcept.MODERN)
                 .deskSummary("제 원룸책상3입니다.")

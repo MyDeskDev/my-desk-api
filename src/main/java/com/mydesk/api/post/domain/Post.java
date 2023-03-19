@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @NoArgsConstructor
@@ -18,33 +19,34 @@ public class Post extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private UUID uuid;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(nullable = false, name="thumbnail_img_url")
+    @Column(name="thumbnail_img_url")
     private String thumbnailImgUrl;
 
-    @Column(nullable = false, name="space_type")
+    @Column(name="space_type")
     private String spaceType;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, name="desk_concept")
+    @Column(name="desk_concept")
     private DeskConcept deskConcept;
 
-    @Column(nullable = false, name="desk_summary")
+    @Column(name="desk_summary")
     private String deskSummary;
 
-    @Column(nullable = false, name="cost")
-    private int cost;
+    @Column(name="cost")
+    private Integer cost;
 
-    @Column(nullable = false)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
     private List<PostContent> postContents = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, name="status")
+    @Column(name="status")
     private PostStatus status;
 
     @Column(name="post_order")
@@ -82,6 +84,24 @@ public class Post extends BaseTimeEntity {
     public void addAllPostContent(List<PostContent> postContents) {
         for (PostContent postContent : postContents) {
             this.addPostContent(postContent);
+        }
+    }
+
+    public void validate() {
+        if (this.thumbnailImgUrl.isEmpty()) {
+            throw new IllegalArgumentException("Thumbnail image url is required field");
+        }
+
+        if (this.spaceType.isEmpty()) {
+            throw new IllegalArgumentException("Space type is required field");
+        }
+
+        if (this.deskSummary.isEmpty()) {
+            throw new IllegalArgumentException("Desk summary is required field");
+        }
+
+        if (this.cost == null) {
+            throw new IllegalArgumentException("Cost is required field");
         }
     }
 }
