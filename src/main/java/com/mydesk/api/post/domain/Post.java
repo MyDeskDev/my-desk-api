@@ -19,8 +19,9 @@ public class Post extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID uuid;
+
+    @Column(name="uuid", nullable = false, updatable = false, unique = true)
+    private UUID uuid = UUID.randomUUID();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
