@@ -28,10 +28,10 @@ public class PostController {
 
     @ApiOperation(value="포스트 생성")
     @ApiResponses({
-          @ApiResponse(code = 200, message = "성공"),
+          @ApiResponse(code = 201, message = "성공"),
           @ApiResponse(code = 403, message = "권한 없음")
     })
-    @PostMapping("/api/v1/posts")
+    @PutMapping("/api/v1/posts")
     public Long create(@Valid @RequestBody PostCreateRequestDto requestDto) {
         return postService.create(requestDto);
     }
@@ -43,10 +43,10 @@ public class PostController {
 
     @ApiOperation(value="포스트 임시저장")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 201, message = "성공"),
             @ApiResponse(code = 403, message = "권한 없음")
     })
-    @PostMapping("/api/v1/posts/temp-save")
+    @PutMapping("/api/v1/posts/temp-save")
     public UUID tempSave(@Valid @RequestBody PostTempSaveDto requestDto) {
         return postService.tempSave(requestDto);
     }

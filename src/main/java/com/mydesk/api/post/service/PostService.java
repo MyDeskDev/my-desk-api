@@ -38,12 +38,20 @@ public class PostService {
 
     @Transactional
     public UUID tempSave(@Valid PostTempSaveDto requestDto) {
-        // TODO: 회원체계가 잡힌 후에
-//        User user = userRepository.findById(userDto.getId())
-//                .orElseThrow(() -> new IllegalArgumentException("잘못된 사용자입니다."));
-        Post post = requestDto.getPost();
-        User user = requestDto.getUser();
-        post.setUser(user);
+        Post post;
+        User user;
+        if (requestDto.getUuid() != null) {
+            post = postRepository.findByUuid(requestDto.getUuid())
+                    .orElseThrow(() -> new IllegalArgumentException("잘못된 접근입니다."));
+            user = post.getUser();
+            requestDto.updatePost(post);
+            requestDto.updateUser(user);
+        } else {
+            post = requestDto.getPost();
+            user = requestDto.getUser();
+            post.setUser(user);
+        }
+
         userRepository.save(user);
         postRepository.save(post);
 

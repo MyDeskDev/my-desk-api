@@ -5,6 +5,7 @@ import com.mydesk.api.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @Entity
 public class Post extends BaseTimeEntity {
@@ -43,7 +45,7 @@ public class Post extends BaseTimeEntity {
     @Column(name="cost")
     private Integer cost;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post", orphanRemoval = true)
     private List<PostContent> postContents = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)

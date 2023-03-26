@@ -14,9 +14,12 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 public class PostTempSaveDto {
+
+    private final UUID uuid;
     private final String profileImgUrl;
 
     private final String name;
@@ -58,6 +61,7 @@ public class PostTempSaveDto {
 
     @Builder
     public PostTempSaveDto(
+            UUID uuid,
             String profileImgUrl,
             String name,
             String nickname,
@@ -77,6 +81,7 @@ public class PostTempSaveDto {
             List<DeskContentCreateDto> deskContents,
             List<DeskItemCreateDto> deskItems
     ) {
+        this.uuid = uuid;
         this.profileImgUrl = profileImgUrl;
         this.name = name;
         this.nickname = nickname;
@@ -116,15 +121,72 @@ public class PostTempSaveDto {
                 .cost(cost)
                 .build();
 
+        int postOrder = 1;
         if (!deskContents.isEmpty()) {
-            int postOrder = 1;
             for (DeskContentCreateDto dto: deskContents) {
                 post.addPostContent(dto.toEntity(postOrder));
                 ++postOrder;
             }
         }
 
+        if (!deskItems.isEmpty()) {
+            for (DeskItemCreateDto dto: deskItems) {
+                post.addPostContent(dto.toEntity(postOrder));
+                ++postOrder;
+            }
+        }
+
         return post;
+    }
+
+    public Post updatePost(Post post) {
+        post.setThumbnailImgUrl(this.getThumbnailImgUrl());
+        post.setDeskSummary(this.getDeskSummary());
+        post.setSpaceType(this.getSpaceType());
+        post.getPostContents().clear();
+
+        if (!deskContents.isEmpty()){
+            for (DeskContentCreateDto dto: deskContents) {
+                if (dto.getType().equals(ContentType.deskPicture)) {
+                    thumbnailImgUrl = dto.getValue();
+                    break;
+                }
+            }
+        }
+
+        int postOrder = 1;
+        if (!deskContents.isEmpty()) {
+            for (DeskContentCreateDto dto: deskContents) {
+                post.addPostContent(dto.toEntity(postOrder));
+                ++postOrder;
+            }
+        }
+
+        if (!deskItems.isEmpty()) {
+            for (DeskItemCreateDto dto: deskItems) {
+                post.addPostContent(dto.toEntity(postOrder));
+                ++postOrder;
+            }
+        }
+
+        return post;
+    }
+
+    public User updateUser(User user) {
+        user.setProfileImgUrl(this.getProfileImgUrl());
+        user.setName(this.getName());
+        user.setNickname(this.getNickname());
+        user.setEmail(this.getEmail());
+        user.setGender(this.getGender());
+        user.setEmail(this.getEmail());
+        user.setGender(this.getGender());
+        user.setAge(this.getAge());
+        user.setBloodType(this.getBloodType());
+        user.setMbti(this.getMbti());
+        user.setCountryCode(this.getCountryCode());
+        user.setJob(this.getJob());
+
+        return user;
     }
 
     public User getUser() {
