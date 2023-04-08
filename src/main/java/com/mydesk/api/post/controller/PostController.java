@@ -41,6 +41,16 @@ public class PostController {
         return postService.getPost(id);
     }
 
+    @ApiOperation(value="포스트 임시저장 불러오기")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "성공"),
+            @ApiResponse(code = 403, message = "권한 없음")
+    })
+    @GetMapping("/api/v1/posts/temp-save")
+    public PostResponseDto getTempSavedPost(@RequestParam(value = "uuid", required = true) UUID uuid) {
+        return postService.getTempSavedPost(uuid);
+    }
+
     @ApiOperation(value="포스트 임시저장")
     @ApiResponses({
             @ApiResponse(code = 201, message = "성공"),
