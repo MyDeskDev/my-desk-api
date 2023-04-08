@@ -87,4 +87,11 @@ public class PostService {
 
         return new PostResponseDto(post);
     }
+
+    public PostResponseDto getTempSavedPost(UUID uuid) {
+        Post post = postRepository.findByUuid(uuid)
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 접근입니다."));
+
+        return new PostResponseDto(post);
+    }
 }
