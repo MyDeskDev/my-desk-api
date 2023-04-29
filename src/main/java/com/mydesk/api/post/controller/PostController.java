@@ -31,7 +31,7 @@ public class PostController {
           @ApiResponse(code = 201, message = "성공"),
           @ApiResponse(code = 403, message = "권한 없음")
     })
-    @PutMapping("/api/v1/posts")
+    @PostMapping("/api/v1/posts")
     public Long create(@Valid @RequestBody PostCreateRequestDto requestDto) {
         return postService.create(requestDto);
     }
