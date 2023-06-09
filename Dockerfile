@@ -1,13 +1,5 @@
-FROM amazoncorretto:11-alpine-jdk
+FROM ghcr.io/graalvm/jdk:ol8-java17-22.3.0
 
-ARG JAR_FILE
+COPY ./build/libs/api.jar api.jar
 
-ARG MAIN_DIRECTORY=/usr/mydesk-api
-WORKDIR $MAIN_DIRECTORY
-
-COPY *.properties ./
-COPY ${JAR_FILE} ./app.jar
-
-ENTRYPOINT ["/bin/sh","-c", \
-    "java -jar -Dspring.config.location=classpath:/application.properties,/usr/mydesk-api/application-oauth.properties,/usr/mydesk-api/application-aws.properties,/usr/mydesk-api/application-real-db.properties -Dspring.profiles.active=real ./app.jar" \
-]
+ENTRYPOINT ["java", "-Dspring.profiles.active=local", "-jar", "api.jar"]
