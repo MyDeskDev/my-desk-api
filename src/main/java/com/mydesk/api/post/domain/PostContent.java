@@ -8,8 +8,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Getter
-@Entity
 @NoArgsConstructor
+@Table(name = "\"post_content\"")
+@Entity
 public class PostContent extends BaseTimeEntity {
 
     @Id

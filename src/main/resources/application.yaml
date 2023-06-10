@@ -1,4 +1,13 @@
 spring:
+  datasource:
+    hikari:
+      jdbc-url: jdbc:mariadb://mydesk.cmibjlimzo3y.ap-northeast-2.rds.amazonaws.com:3306/mydesk
+      username: ${DB_USERNAME}
+      password: ${DB_PASSWORD}
+      driver-class-name: org.mariadb.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
   servlet:
     multipart:
       max-file-size: 20MB
@@ -59,14 +68,12 @@ cloud:
     stack:
       auto: false
 
-
-
 ---
 
 spring:
   config:
     activate:
-      on-profile: "local"
+      on-profile: local
   jpa:
     show_sql: true
     hibernate:
@@ -77,6 +84,7 @@ spring:
         storage_engine: innodb
   datasource:
     hikari:
+      driver-class-name: org.h2.Driver
       jdbc-url: jdbc:h2:mem:testdb;MODE=MYSQL
       username: admin
       maximum-pool-size: 20

@@ -15,6 +15,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "\"post\"")
 @Entity
 public class Post extends BaseTimeEntity {
 
